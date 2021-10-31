@@ -1,9 +1,9 @@
 export class Usuario {
-    private nome: string;
-    private tipo: string;
-    private email: string;
-    private data_nascimento: Date;
-    private senha: string;
+    readonly nome: string;
+    readonly tipo: string;
+    readonly email: string;
+    readonly data_nascimento: Date;
+    readonly senha: string;
 
     constructor(
         nome: string,
