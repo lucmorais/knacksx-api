@@ -1,17 +1,20 @@
 export class Usuario {
-    readonly nome: string;
-    readonly tipo: string;
-    readonly email: string;
-    readonly data_nascimento: Date;
-    readonly senha: string;
+    public id: number;
+    public nome: string;
+    public tipo: string;
+    public email: string;
+    public data_nascimento: Date;
+    public senha: string;
 
     constructor(
+        id: number,
         nome: string,
         tipo: string,
         email: string,
         data_nascimento: Date,
         senha: string,
     ) {
+        this.id = id;
         this.nome = nome;
         this.tipo = tipo;
         this.email = email;
