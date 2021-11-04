@@ -9,19 +9,21 @@ export class UsuariosService {
         this.usuarios.push(usuario);
     }
 
-    listar_todos() {
+    listar_todos(): Usuario[] {
         return this.usuarios;
     }
 
-    listar_id(id: number) {
+    listar_id(id: number): Usuario {
         return this.usuarios.find(user => user.id == id);
     }
 
-    atualizar(id: number) {
-    
+    atualizar(usuario: Usuario): Usuario {
+        return usuario;
     }
 
-    deletar() {
-
+    deletar(id: number): Usuario {
+        const usuario = this.usuarios.find(user => user.id == id);
+        this.usuarios.splice(this.usuarios.indexOf(usuario), 1);
+        return usuario;
     }
 }

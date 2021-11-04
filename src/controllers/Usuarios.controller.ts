@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParamData, Paramtype, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Res } from "@nestjs/common";
 import { Usuario } from "src/models/usuarios.model";
 import { UsuariosService } from "src/services/usuarios.service";
 
@@ -8,7 +8,7 @@ export class UsuariosController {
     constructor(private usuariosService: UsuariosService) {}
 
     @Get()
-    buscar_todos() {
+    buscar_todos(): Usuario[] | Error {
         try {
             return this.usuariosService.listar_todos();
         } catch (error) {
@@ -17,7 +17,7 @@ export class UsuariosController {
     }
     
     @Get(':id')
-    buscar_id(@Param() param) {
+    buscar_id(@Param() param): Usuario | Error {
         try {
             return this.usuariosService.listar_id(param.id);
         } catch (error) {
@@ -26,22 +26,32 @@ export class UsuariosController {
     }
     
     @Post()
-    adicionar(@Body() usuario: Usuario) {
+    adicionar(@Body() usuario: Usuario): Usuario | Error {
         try {
-            this.usuariosService.adicionar(usuario);
-            return usuario;
+            const user  = new Usuario(usuario.id, usuario.nome, usuario.tipo, usuario.email, usuario.data_nascimento, usuario.senha);
+            this.usuariosService.adicionar(user);
+            return user;
         } catch (error) {
             return error;
         }
     }
 
     @Put(':id')
-    atualizar() {
-        
+    atualizar(@Body() usuario: Usuario): Usuario | Error {
+        try {
+            return this.usuariosService.atualizar(usuario);
+        } catch (error) {
+            return error;
+        }
     }
 
     @Delete(':id')
-    deletar() {
-        
+    deletar(@Param() param): Usuario | Error {
+        try {
+            const usuario = this.usuariosService.deletar(param.id);
+            return usuario;
+        } catch (error) {
+            return error;
+        }
     }
 }
