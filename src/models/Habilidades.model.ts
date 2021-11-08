@@ -1,18 +1,24 @@
-export class Habilidade {
-    public id: number;
-    public titulo: string;
-    public descricao: string;
-    public nivel: number;
+import { Table, Model, Column, DataType } from "sequelize-typescript";
 
-    constructor(
-        id: number,
-        titulo: string,
-        descricao: string,
-        nivel: number
-    ) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.nivel = nivel;
-    }
+@Table
+export class Habilidades extends Model {
+    
+    @Column({
+        type: DataType.STRING(50),
+        allowNull: false
+    })
+    titulo: string;
+
+    @Column({
+        type: DataType.TEXT
+    })
+    descricao: string;
+
+    @Column({
+        type: DataType.STRING,
+        validate: {
+            isIn: [['Básico', 'Intermediário', 'Avançado']]
+        }
+    })
+    nivel: string;
 }
