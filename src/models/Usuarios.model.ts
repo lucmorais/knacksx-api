@@ -1,24 +1,39 @@
-export class Usuario {
-    public id: number;
-    public nome: string;
-    public tipo: string;
-    public email: string;
-    public data_nascimento: Date;
-    public senha: string;
+import { Table, Model, Column, DataType } from "sequelize-typescript";
 
-    constructor(
-        id: number,
-        nome: string,
-        tipo: string,
-        email: string,
-        data_nascimento: Date,
-        senha: string,
-    ) {
-        this.id = id;
-        this.nome = nome;
-        this.tipo = tipo;
-        this.email = email;
-        this.data_nascimento = data_nascimento;
-        this.senha = senha;
-    }
+@Table
+export class Usuarios extends Model {
+    @Column({
+        type: DataType.STRING,
+        allowNull: false
+    })
+    nome: string;
+
+    @Column({
+        type: DataType.STRING(20),
+        allowNull: false
+    })
+    tipo: string;
+
+    @Column({
+        type: DataType.STRING(50),
+        allowNull: false
+    })
+    email: string;
+
+    @Column({
+        type: DataType.DATEONLY,
+        allowNull: false
+    })
+    data_nascimento: Date;
+
+    @Column({
+        type: DataType.STRING(20),
+        allowNull: false
+    })
+    senha: string;
+
+    @Column({
+        type: DataType.STRING
+    })
+    reset_senha: string;
 }
