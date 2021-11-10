@@ -1,6 +1,8 @@
-import { Table, Model, Column, DataType } from "sequelize-typescript";
+import { Table, Model, Column, DataType, BelongsToMany } from "sequelize-typescript";
+import { Usuario } from "./Usuario.model";
+import { Usuario_FormacaoA } from "./UsuarioFormacaoA.model";
 
-@Table
+@Table({ freezeTableName: true })
 export class Formacao_Academica extends Model {
     
     @Column({
@@ -21,17 +23,6 @@ export class Formacao_Academica extends Model {
     })
     tipo: string;
 
-    @Column({
-        type: DataType.STRING(20),
-        allowNull: false,
-        validate: {
-            isIn: [['Em curso', 'Concluído', 'Trancado']]
-        }
-    })
-    status: string;
-
-    @Column({
-        type: DataType.DATEONLY
-    })
-    data_conclusao: Date;
+    @BelongsToMany(() => Usuario, () => Usuario_FormacaoA)
+    usuarios: Usuario[]
 }

@@ -3,18 +3,29 @@ import { SequelizeModule } from '@nestjs/sequelize'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config/dist/config.module';
-import { HabilidadesController } from './controllers/Habilidades.controller';
-import { UsuariosController } from './controllers/usuarios.controller';
-import { HabilidadesService } from './services/habilidades.service';
-import { UsuariosService } from './services/usuarios.service';
-import { Usuarios } from './models/Usuarios.model';
-import { Habilidades } from './models/Habilidades.model';
-import { Usuarios_Habilidades } from './models/Usuarios_Habilidades.model';
-import { Experiencias } from './models/Experiencias.model';
-import { Usuarios_Experiencias } from './models/Usuarios_Experiencias.model';
-import { Formacao_Academica } from './models/Formacao_Academica.model';
-import { Formacao_Complementar } from './models/Formacao_Complementar.model';
-import { Usuarios_Formacao_C } from './models/Usuarios_Formacao_C.model';
+import { Usuario } from './models/Usuario.model';
+import { Habilidade } from './models/Habilidade.model';
+import { Usuario_Habilidade } from './models/UsuarioHabilidade.model';
+import { Experiencia } from './models/Experiencia.model';
+import { Usuario_Experiencia } from './models/UsuarioExperiencia.model';
+import { Formacao_Academica } from './models/FormacaoAcademica.model';
+import { Formacao_Complementar } from './models/FormacaoComplementar.model';
+import { Usuario_FormacaoC } from './models/UsuarioFormacaoC.model';
+import { Usuario_FormacaoA } from './models/UsuarioFormacaoA.model';
+import { HabilidadeController } from './controllers/Habilidade.controller';
+import { UsuarioController } from './controllers/Usuario.controller';
+import { ExperienciaController } from './controllers/Experiencia.controller';
+import { FormacaoAcademicaController } from './controllers/FormacaoAcademica.controller';
+import { FormacaoComplementarController } from './controllers/FormacaoComplementar.controller';
+import { HabilidadeService } from './services/Habilidade.service';
+import { UsuarioService } from './services/Usuario.service';
+import { UsuarioHabilidadeService } from './services/UsuarioHabilidade.service';
+import { UsuarioExperienciaService } from './services/UsuarioExperiencia.service';
+import { UsuarioFormacaoAService } from './services/UsuarioFormacaoA.service';
+import { UsuarioFormacaoCService } from './services/UsuarioFormacaoC.service';
+import { ExperienciaService } from './services/Experiencia.service';
+import { FormacaoAcademicaService } from './services/FormacaoAcademica.service';
+import { FormacaoComplementarService } from './services/FormacaoComplementar.service';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -26,27 +37,39 @@ import { Usuarios_Formacao_C } from './models/Usuarios_Formacao_C.model';
       password: process.env.SENHA_BD,
       database: 'wise',
       autoLoadModels: true,
+      synchronize: true
     }),
     SequelizeModule.forFeature([
-      Usuarios, 
-      Habilidades,
-      Usuarios_Habilidades,
-      Experiencias,
-      Usuarios_Experiencias,
+      Usuario, 
+      Habilidade,
+      Usuario_Habilidade,
+      Experiencia,
+      Usuario_Experiencia,
       Formacao_Academica,
       Formacao_Complementar,
-      Usuarios_Formacao_C
+      Usuario_FormacaoC,
+      Usuario_FormacaoA
     ])
   ],
   controllers: [
     AppController, 
-    UsuariosController, 
-    HabilidadesController
+    UsuarioController, 
+    HabilidadeController,
+    ExperienciaController,
+    FormacaoAcademicaController,
+    FormacaoComplementarController
   ],
   providers: [
     AppService,
-    UsuariosService, 
-    HabilidadesService
+    UsuarioService, 
+    HabilidadeService,
+    ExperienciaService,
+    FormacaoAcademicaService,
+    FormacaoComplementarService,
+    UsuarioHabilidadeService,
+    UsuarioExperienciaService,
+    UsuarioFormacaoAService,
+    UsuarioFormacaoCService
   ],
 })
 export class AppModule {}
