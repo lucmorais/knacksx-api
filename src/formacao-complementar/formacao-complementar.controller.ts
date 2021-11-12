@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from "@nestjs/common";
 import { Response } from "@nestjs/common";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { Formacao_Complementar } from "src/formacao-complementar/formacao-complementar.model";
 import { FormacaoComplementarService } from "src/formacao-complementar/formacao-complementar.service";
 
-
+@UseGuards(JwtAuthGuard)
 @Controller('formacao_c')
 export class FormacaoComplementarController {
 

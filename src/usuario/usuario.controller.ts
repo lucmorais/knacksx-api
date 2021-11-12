@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from "@nestjs/common";
 import { Response } from "@nestjs/common";
 import { Usuario } from "src/usuario/usuario.model";
 import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
@@ -10,7 +10,9 @@ import { UsuarioExperienciaService } from "src/usuario-experiencia/usuario-exper
 import { UsuarioFormacaoAService } from "src/usuario-formacao-a/usuario-formacao-a.service";
 import { UsuarioFormacaoCService } from "src/usuario-formacao-c/usuario-formacao-c.service";
 import { UsuarioHabilidadeService } from "src/usuario-habilidade/usuario-habilidade.service";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
+@UseGuards(JwtAuthGuard)
 @Controller('usuarios')
 export class UsuarioController {
 
@@ -21,7 +23,7 @@ export class UsuarioController {
         private usuarios_formacao_aService: UsuarioFormacaoAService,
         private usuarios_formacao_cService: UsuarioFormacaoCService
         ) {}
-
+    
     @Get()
     async buscar_todos(): Promise<Usuario[] | Error> {
         try {
