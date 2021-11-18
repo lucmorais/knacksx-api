@@ -1,8 +1,12 @@
+import { useRouter } from "next/router";
 import React, { FormEvent } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { setCookie } from "../utils/cookies";
 import { http } from "../utils/http";
 
 const PaginaLogin = () => {
+
+    const router = useRouter();
 
     async function submit(event: FormEvent) {
         event.preventDefault();
@@ -10,8 +14,9 @@ const PaginaLogin = () => {
         const email = (document.querySelector('#email') as HTMLInputElement).value;
         const senha = (document.querySelector('#senha') as HTMLInputElement).value;
 
-        const { data } = await http.post('auth/login', { email, senha });
-        console.log(data);
+        const { data } = await http.post('login', { email, senha });
+        setCookie("token", data.access_token);
+        router.push('/');
     }
 
     return (

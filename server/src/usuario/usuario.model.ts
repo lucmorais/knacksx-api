@@ -18,7 +18,10 @@ export class Usuario extends Model {
 
     @Column({
         type: DataType.STRING(20),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isIn: [['Canditado', 'Gestor']]
+        }
     })
     tipo: string;
 
