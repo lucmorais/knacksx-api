@@ -12,7 +12,7 @@ import { UsuarioFormacaoCService } from "src/usuario-formacao-c/usuario-formacao
 import { UsuarioHabilidadeService } from "src/usuario-habilidade/usuario-habilidade.service";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
-@UseGuards(JwtAuthGuard)
+
 @Controller('usuarios')
 export class UsuarioController {
 
