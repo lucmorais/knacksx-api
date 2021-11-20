@@ -1,0 +1,23 @@
+.principal {
+    height: 100vh;
+    background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    background: #cad3d9;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    max-width: 50%;
+    border-radius: 20px;
+}
+
+.titulo {
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+.botao {
+    width: 80%;
+}

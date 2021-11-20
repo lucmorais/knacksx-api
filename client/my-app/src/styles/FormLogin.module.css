@@ -1,0 +1,23 @@
+.principal {
+    height: 100vh;
+    background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    background: #cad3d9;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    border-radius: 20px;
+}
+
+.conteudo {
+    text-align: center;
+    max-height: 100%;
+}
+
+.botaoCadastro {
+    width: 70%;
+    margin-top: 2em;
+}
