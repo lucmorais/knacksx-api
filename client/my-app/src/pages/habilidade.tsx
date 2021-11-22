@@ -1,6 +1,6 @@
 import styles from '../styles/Habilidade.module.css';
 import { NextPage } from "next";
-import React, { Context, ContextType, FormEvent, useState } from "react";
+import React, { Context, ContextType, FormEvent, useCallback, useEffect, useState } from "react";
 import { Button, Col, Form, Row, Nav } from "react-bootstrap";
 import { Layout } from "../components/Layout";
 import { http } from "../utils/http";
@@ -8,6 +8,7 @@ import { withAuth } from "../utils/withAuth";
 import { Tabela } from '../components/Tabela';
 import { FormularioHabilidade } from '../components/FormularioHabilidade';
 import { ItensTabela } from '../components/ItensTabela';
+import { Icones } from '../components/Icones';
 
 interface HabilidadePageProps {
     username: string
@@ -22,22 +23,9 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
     const [componentTabela, setComponentTabela] = useState(false);
     const [componentFormulario, setComponentFormulario] = useState(true);
 
-    function handleClick() {
-        retornaHabilidade();
-
-        if (componentFormulario == false) {
-            setComponentFormulario(true);
-            setComponentTabela(false);
-        }
-        else{
-            setComponentFormulario(false);
-            setComponentTabela(true);
-        }
-    }
-
-    async function retornaHabilidade() {
-        const { data } = await http.get(`/habilidades/all/${props.userId}`);
-
+    async function carregaHabilidades() {
+        const {data} = await http.get(`habilidades/all/${props.userId}`);
+        
         setHabilidades(data);
     }
 
@@ -50,7 +38,8 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         
         document.forms[0].reset();
 
-        const { data } = await http.post(`habilidades/${props.userId}`, { titulo, descricao, nivel });
+        await http.post(`habilidades/${props.userId}`, { titulo, descricao, nivel });
+        
     }
 
     return (
@@ -58,18 +47,35 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         <Layout nome={props.username}>
             <Row className="mb-5 mt-5">
                 <Col>
-                    <Button variant="primary" onClick={handleClick}>Adicionar Habilidade</Button>
+                    <Button variant="primary" onClick={() => {
+                        setComponentFormulario(true);
+                        setComponentTabela(false);
+                    }}>Adicionar Habilidade</Button>
                 </Col>
                 <Col>
-                    <Button variant="primary" onClick={handleClick}>Mostrar Habilidades cadastradas</Button>
+                    <Button variant="primary" onClick={() => {
+                        carregaHabilidades();
+                        setComponentTabela(true);
+                        setComponentFormulario(false);
+                    }}>Mostrar Habilidades cadastradas</Button>
                 </Col>
             </Row>
             {componentFormulario && <FormularioHabilidade func={submit}/>}
-            {componentTabela &&
+            {componentTabela && habilidades &&
                 <Tabela>
                     {habilidades.map((habilidade, index) => {
                         return (
-                            <ItensTabela habs={habilidade}/>
+                            <ItensTabela habs={habilidade}>
+                                <td>
+                                    <Button onClick={async () => {
+                                        await http.delete(`habilidades/${props.userId}/u_h/${habilidade.id}`);
+                                        setTimeout(() => {
+                                            carregaHabilidades();
+                                        },1000);
+                                    }}><Icones/>
+                                    </Button>
+                                </td>
+                            </ItensTabela>
                         )
                     })}
                 </Tabela>
@@ -93,5 +99,5 @@ export const getServerSideProps = withAuth(
             props: data,
         };
     },
-    ""
+    "login"
 );

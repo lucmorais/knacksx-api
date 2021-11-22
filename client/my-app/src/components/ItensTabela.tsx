@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { http } from '../utils/http';
 import { Icones } from './Icones';
 
 interface ItensTabela {
     habs: any;
+    children: any;
 }
 
 export function ItensTabela(props: ItensTabela) {
@@ -11,9 +13,7 @@ export function ItensTabela(props: ItensTabela) {
             <td>{props.habs.titulo}</td>
             <td>{props.habs.descricao}</td>
             <td>{props.habs.nivel}</td>
-            <td>
-                <a><Icones/></a>
-            </td>
+            {props.children}
         </tr>
     )
 }

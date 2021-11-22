@@ -83,6 +83,7 @@ export class UsuarioController {
         }
     }
 
+    /*
     @Put('/habilidades/:id')
     async atualizar_usuario_habilidade(@Param() param, @Body() usuario_habilidade: Usuario_Habilidade): Promise<Usuario_Habilidade | Error> {
         try {
@@ -90,7 +91,7 @@ export class UsuarioController {
         } catch (error) {
             return error;
         }
-    }
+    }*/
 
     @Delete('/habilidades/:id')
     async deletar_usuario_habilidade(@Param() param, @Res() res: Response): Promise<any | Error>{

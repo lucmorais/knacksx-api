@@ -1,4 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { Op } from "sequelize";
 import { Habilidade } from "src/habilidade/habilidade.model";
 import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
 import { USUARIO_HABILIDADE_REPOSITORY } from "./constants";
@@ -22,10 +23,15 @@ export class UsuarioHabilidadeService {
         return this.usuarios_habilidadesModel.findAll();
     }
 
-    async listar_id(id: number): Promise<Usuario_Habilidade> {
-        return this.usuarios_habilidadesModel.findByPk(id);
+    async listar_id(id_usuario: number, id_habilidade?: number): Promise<Usuario_Habilidade> {
+        return this.usuarios_habilidadesModel.findOne({
+            where: {
+                [Op.and]: [{ fk_usuario: id_usuario }, { fk_habilidade: id_habilidade }]
+            }
+        });
     }
 
+    /*
     async atualizar(usuario_habilidade: Usuario_Habilidade, id: number): Promise<Usuario_Habilidade> {
         return this.usuarios_habilidadesModel.update(usuario_habilidade, {
             where: {
@@ -35,10 +41,11 @@ export class UsuarioHabilidadeService {
         }).then(() => {
             return this.listar_id(id);
         });
-    }
+    }*/
 
-    async deletar(id: number) {
-        const usuario_habilidade: Usuario_Habilidade = await this.listar_id(id);
+    async deletar(id_usuario: number, id_habilidade?: number) {
+        const usuario_habilidade: Usuario_Habilidade = await this.listar_id(id_usuario, id_habilidade);
         usuario_habilidade.destroy();
+        console.log("cheguei");
     }
 }
