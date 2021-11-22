@@ -2,7 +2,11 @@ import { Column, Model, DataType, Table, ForeignKey, PrimaryKey, AutoIncrement }
 import { Experiencia } from "../experiencia/experiencia.model";
 import { Usuario } from "../usuario/usuario.model";
 
-@Table({ freezeTableName: true })
+@Table({
+    freezeTableName: true,
+    createdAt: false, 
+    updatedAt: false 
+})
 export class Usuario_Experiencia extends Model {
 
     @Column({

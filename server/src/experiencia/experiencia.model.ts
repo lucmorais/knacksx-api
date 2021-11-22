@@ -2,7 +2,11 @@ import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescr
 import { Usuario } from "../usuario/usuario.model";
 import { Usuario_Experiencia } from "../usuario-experiencia/usuario-experiencia.model";
 
-@Table({ freezeTableName: true })
+@Table({
+    freezeTableName: true,
+    createdAt: false, 
+    updatedAt: false 
+})
 export class Experiencia extends Model {
     
     @Column({

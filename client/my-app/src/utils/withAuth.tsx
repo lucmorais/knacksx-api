@@ -1,7 +1,7 @@
 import { getPayload, isTokenExpired } from "./auth";
 import { parseCookies } from "./cookies";
 
-export function withAuth(func: any) {
+export function withAuth(func: any, path: string) {
     return async(ctx: any) => {
         const cookies = parseCookies(ctx.req);
 
@@ -9,7 +9,7 @@ export function withAuth(func: any) {
             return {
                 redirect: {
                     permanent: false,
-                    destination: "/login",
+                    destination: `/${path}`,
                 },
             };
         }

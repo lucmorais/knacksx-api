@@ -3,17 +3,22 @@ import { Response } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { Habilidade } from "src/habilidade/habilidade.model";
 import { HabilidadeService } from "src/habilidade/habilidade.service";
+import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
+import { UsuarioHabilidadeService } from "src/usuario-habilidade/usuario-habilidade.service";
 
-@UseGuards(JwtAuthGuard)
+
 @Controller('habilidades')
 export class HabilidadeController {
 
-    constructor(private habilidadesService: HabilidadeService) {}
+    constructor(
+        private habilidadesService: HabilidadeService,
+        private usuarios_habilidadesService: UsuarioHabilidadeService
+    ) {}
 
-    @Get()
-    async buscar_todos(): Promise<Habilidade[] | Error> {
+    @Get('/all/:id')
+    async buscar_todos(@Param() param): Promise<Habilidade[] | Error> {
         try {
-            return this.habilidadesService.listar_todos();
+            return this.habilidadesService.listar_todos(param.id);
         } catch (error) {
             return error;
         }
@@ -28,10 +33,11 @@ export class HabilidadeController {
         }
     }
     
-    @Post()
-    async adicionar(@Body() habilidade: Habilidade): Promise<any | Error> {
+    @Post(':id')
+    async adicionar(@Body() habilidade: Habilidade, @Param() param): Promise<any | Error> {
         try {
-            this.habilidadesService.adicionar(habilidade);
+            const num = await this.habilidadesService.adicionar(habilidade);
+            this.usuarios_habilidadesService.adicionar(param.id, num);
             return habilidade;
         } catch (error) {
             return error;

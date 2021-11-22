@@ -1,14 +1,14 @@
 import { Table, Model, Column, DataType, BelongsToMany } from "sequelize-typescript";
 import { Experiencia } from "../experiencia/experiencia.model";
-import { Formacao_Academica } from "../formacao-academica/formacao-academica.model";
-import { Formacao_Complementar } from "../formacao-complementar/formacao-complementar.model";
 import { Habilidade } from "../habilidade/habilidade.model";
 import { Usuario_Experiencia } from "../usuario-experiencia/usuario-experiencia.model";
-import { Usuario_FormacaoA } from "../usuario-formacao-a/usuario-formacao-a.model";
-import { Usuario_FormacaoC } from "../usuario-formacao-c/usuario-formacao-c.model";
 import { Usuario_Habilidade } from "../usuario-habilidade/usuario-habilidade.model";
 
-@Table({ freezeTableName: true })
+@Table({
+    freezeTableName: true,
+    createdAt: false, 
+    updatedAt: false 
+})
 export class Usuario extends Model {
     @Column({
         type: DataType.STRING,
@@ -20,7 +20,7 @@ export class Usuario extends Model {
         type: DataType.STRING(20),
         allowNull: false,
         validate: {
-            isIn: [['Canditado', 'Gestor']]
+            isIn: [['Candidato', 'Gestor']]
         }
     })
     tipo: string;
@@ -52,10 +52,4 @@ export class Usuario extends Model {
 
     @BelongsToMany(() => Experiencia, () => Usuario_Experiencia)
     experiencias: Experiencia[]
-
-    @BelongsToMany(() => Formacao_Academica, () => Usuario_FormacaoA)
-    formacoes_a: Formacao_Academica[]
-
-    @BelongsToMany(() => Formacao_Complementar, () => Usuario_FormacaoC)
-    formacoes_c: Formacao_Complementar[]
 }

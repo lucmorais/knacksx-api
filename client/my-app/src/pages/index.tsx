@@ -1,20 +1,45 @@
 import type { NextPage } from 'next';
-import styles from "../styles/Layout.module.css";
-import { Navbar } from 'react-bootstrap';
-import { Container } from 'react-bootstrap';
-import { HomePageProps } from '../utils/home';
+import React, { useState } from 'react';
+import styles from '../styles/Global.module.css';
 import { http } from '../utils/http';
 import { withAuth } from '../utils/withAuth';
+import { Layout } from '../components/Layout';
+import { NavegacaoCandidato } from '../components/NavegacaoCandidato';
+import { Col, Row } from 'react-bootstrap';
+
+interface HomePageProps{
+  username: string;
+  userId: number;
+  payload: any;
+}
 
 const Home: NextPage<HomePageProps> = (props) => {
+  const [opcao] = useState([
+    'Visualizar perfil',
+    'Adicionar Habilidade',
+    'Adicionar Experiencia'
+  ]);
+
+  const [path] = useState([
+    'perfil',
+    'habilidade',
+    'experiencia'
+  ])
+
   return (
-    <Container>
-      <Navbar className={styles.layoutCabecalho} bg="dark" variant="dark">
-        <Container>
-          <h3 className="text-white">Bem vindo(a) {props.username}</h3>
-        </Container>
-      </Navbar>
-    </Container>
+    <div>
+      <Layout nome={props.username}>
+        {opcao.map((op, index) => {
+          return (
+            <Row className="mt-5">
+              <Col>
+                <NavegacaoCandidato opcao={op} path={path[index]} id={props.userId}></NavegacaoCandidato>
+              </Col>
+            </Row>
+          )
+        })}
+      </Layout>
+    </div>
   )
 }
 
@@ -31,5 +56,6 @@ export const getServerSideProps = withAuth(
     return {
       props: data,
     };
-  }
+  },
+  "login"
 );

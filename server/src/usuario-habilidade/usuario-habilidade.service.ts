@@ -1,6 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { Habilidade } from "src/habilidade/habilidade.model";
 import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
 import { USUARIO_HABILIDADE_REPOSITORY } from "./constants";
+import { User_Skill } from "./usuario-habilidade";
 
 
 @Injectable()
@@ -11,7 +13,8 @@ export class UsuarioHabilidadeService {
         private usuarios_habilidadesModel: typeof Usuario_Habilidade
     ) {}
 
-    async adicionar(usuario_habilidade: Usuario_Habilidade) {
+    async adicionar(id_usuario: number, id_skill: number) {
+        const usuario_habilidade = new User_Skill(id_usuario, id_skill);
         this.usuarios_habilidadesModel.create(usuario_habilidade);
     }
 

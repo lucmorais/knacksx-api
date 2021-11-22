@@ -2,7 +2,11 @@ import { Column, Model, DataType, Table, ForeignKey, PrimaryKey, AutoIncrement }
 import { Habilidade } from "../habilidade/habilidade.model";
 import { Usuario } from "../usuario/usuario.model";
 
-@Table({ freezeTableName: true })
+@Table({
+    freezeTableName: true,
+    createdAt: false, 
+    updatedAt: false 
+})
 export class Usuario_Habilidade extends Model {
 
     @Column({
@@ -10,14 +14,6 @@ export class Usuario_Habilidade extends Model {
         autoIncrement: true
     })
     id: number;
-    
-    @Column({
-        type: DataType.STRING(20),
-        validate: {
-            isIn: [['Básico', 'Intermediário', 'Avançado']]
-        }
-    })
-    nivel: string;
 
     @ForeignKey(() => Usuario)
     @Column

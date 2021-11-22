@@ -3,12 +3,8 @@ import { Response } from "@nestjs/common";
 import { Usuario } from "src/usuario/usuario.model";
 import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
 import { Usuario_Experiencia } from "src/usuario-experiencia/usuario-experiencia.model";
-import { Usuario_FormacaoA } from "src/usuario-formacao-a/usuario-formacao-a.model";
-import { Usuario_FormacaoC } from "src/usuario-formacao-c/usuario-formacao-c.model";
 import { UsuarioService } from "src/usuario/usuario.service";
 import { UsuarioExperienciaService } from "src/usuario-experiencia/usuario-experiencia.service";
-import { UsuarioFormacaoAService } from "src/usuario-formacao-a/usuario-formacao-a.service";
-import { UsuarioFormacaoCService } from "src/usuario-formacao-c/usuario-formacao-c.service";
 import { UsuarioHabilidadeService } from "src/usuario-habilidade/usuario-habilidade.service";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
@@ -18,9 +14,7 @@ export class UsuarioController {
     constructor(
         private usuariosService: UsuarioService,
         private usuarios_habilidadesService: UsuarioHabilidadeService,
-        private usuarios_experienciasService: UsuarioExperienciaService,
-        private usuarios_formacao_aService: UsuarioFormacaoAService,
-        private usuarios_formacao_cService: UsuarioFormacaoCService
+        private usuarios_experienciasService: UsuarioExperienciaService
         ) {}
     
     @Get()
@@ -84,16 +78,6 @@ export class UsuarioController {
     async buscar_id_usuario_habilidade(@Param() param): Promise<Usuario_Habilidade | Error> {
         try {
             return this.usuarios_habilidadesService.listar_id(param.id);
-        } catch (error) {
-            return error;
-        }
-    }
-    
-    @Post('/habilidades')
-    async adicionar_usuario_habilidade(@Body() usuario_habilidade: Usuario_Habilidade): Promise<any | Error> {
-        try {
-            this.usuarios_habilidadesService.adicionar(usuario_habilidade);
-            return usuario_habilidade;
         } catch (error) {
             return error;
         }
@@ -165,100 +149,4 @@ export class UsuarioController {
             return error;
         }
     }
-
-    // Usuarios_Formação_Academica
-    @Get('/formacao_a/all')
-    async buscar_todos_usuarios_formacao_a(): Promise<Usuario_FormacaoA[] | Error> {
-        try {
-            return this.usuarios_formacao_aService.listar_todos();
-        } catch (error) {
-            return error;
-        }
-    }
-    
-    @Get('/formacao_a/:id')
-    async buscar_id_usuario_formacao_a(@Param() param): Promise<Usuario_FormacaoA | Error> {
-        try {
-            return this.usuarios_formacao_aService.listar_id(param.id);
-        } catch (error) {
-            return error;
-        }
-    }
-    
-    @Post('/formacao_a')
-    async adicionar_usuario_formacao_a(@Body() usuario_formacao_a: Usuario_FormacaoA): Promise<any | Error> {
-        try {
-            this.usuarios_formacao_aService.adicionar(usuario_formacao_a);
-            return usuario_formacao_a;
-        } catch (error) {
-            return error;
-        }
-    }
-
-    @Put('/formacao_a/:id')
-    async atualizar_usuario_formacao_a(@Param() param, @Body() usuario_formacao_a: Usuario_FormacaoA): Promise<Usuario_FormacaoA | Error> {
-        try {
-            return this.usuarios_formacao_aService.atualizar(usuario_formacao_a, param.id);
-        } catch (error) {
-            return error;
-        }
-    }
-
-    @Delete('/formacao_a/:id')
-    async deletar_usuario_formacao_a(@Param() param, @Res() res: Response): Promise<any | Error>{
-        try {
-            this.usuarios_formacao_aService.deletar(param.id);
-            return res.json();
-        } catch (error) {
-            return error;
-        }
-    }
-
-    // Usuarios_Formação_Complementar
-    @Get('/formacao_c/all')
-    async buscar_todos_usuarios_formacao_c(): Promise<Usuario_FormacaoC[] | Error> {
-        try {
-            return this.usuarios_formacao_cService.listar_todos();
-        } catch (error) {
-            return error;
-        }
-    }
-    
-    @Get('/formacao_c/:id')
-    async buscar_id_usuario_formacao_c(@Param() param): Promise<Usuario_FormacaoC | Error> {
-        try {
-            return this.usuarios_formacao_cService.listar_id(param.id);
-        } catch (error) {
-            return error;
-        }
-    }
-    
-    @Post('/formacao_c')
-    async adicionar_usuario_formacao_c(@Body() usuario_formacao_c: Usuario_FormacaoC): Promise<any | Error> {
-        try {
-            this.usuarios_formacao_cService.adicionar(usuario_formacao_c);
-            return usuario_formacao_c;
-        } catch (error) {
-            return error;
-        }
-    }
-
-    @Put('/formacao_c/:id')
-    async atualizar_usuario_formacao_c(@Param() param, @Body() usuario_formacao_c: Usuario_FormacaoC): Promise<Usuario_FormacaoC | Error> {
-        try {
-            return this.usuarios_formacao_cService.atualizar(usuario_formacao_c, param.id);
-        } catch (error) {
-            return error;
-        }
-    }
-
-    @Delete('/formacao_c/:id')
-    async deletar_usuario_formacao_c(@Param() param, @Res() res: Response): Promise<any | Error>{
-        try {
-            this.usuarios_formacao_cService.deletar(param.id);
-            return res.json();
-        } catch (error) {
-            return error;
-        }
-    }
-}
+}    

@@ -1,5 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Habilidade } from "src/habilidade/habilidade.model";
+import { Usuario } from "src/usuario/usuario.model";
 import { HABILIDADE_REPOSITORY } from "./constants";
 
 @Injectable()
@@ -11,11 +12,20 @@ export class HabilidadeService {
     ) {}
 
     async adicionar(habilidade: Habilidade) {
-        this.habilidadesModel.create(habilidade);
+        const ret = this.habilidadesModel.create(habilidade);
+        let id_skill: number = (await ret).id;
+        return id_skill;
     }
 
-    async listar_todos(): Promise<Habilidade[]> {
-        return this.habilidadesModel.findAll();
+    async listar_todos(id?: number): Promise<Habilidade[]> {
+        return this.habilidadesModel.findAll({
+            include: {
+                model: Usuario,
+                where: {
+                    id: id
+                },
+            }
+        });
     }
 
     async listar_id(id: number): Promise<Habilidade> {
