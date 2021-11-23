@@ -7,7 +7,7 @@ import { HabilidadeService } from "src/habilidade/habilidade.service";
 import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
 import { UsuarioHabilidadeService } from "src/usuario-habilidade/usuario-habilidade.service";
 
-
+@UseGuards(JwtAuthGuard)
 @Controller('habilidades')
 export class HabilidadeController {
 

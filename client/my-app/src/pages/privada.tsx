@@ -1,13 +1,28 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import React from 'react';
+import { Col, Nav, Row } from 'react-bootstrap';
 import { isTokenExpired } from '../utils/auth';
 import { parseCookies } from '../utils/cookies';
+import { ProSidebar, MenuItem, SubMenu, Menu } from 'react-pro-sidebar';
+import 'react-pro-sidebar/dist/css/styles.css';
 
 const PaginaPrivada: NextPage = () => {
   return (
-    <div className="text-center bg-success w-5 mt-5">
-        <h1 className="text-white">Bem vindo à Página Privada</h1>
+		<div>
+      <Row>
+        <Col>
+          <ProSidebar>
+            <Menu iconShape="square">
+              <MenuItem>Dashboard</MenuItem>
+              <MenuItem>Component 1</MenuItem>
+              <MenuItem>Component 2</MenuItem>
+            </Menu>
+          </ProSidebar>
+        </Col>
+        <Col><h1>oi</h1></Col>
+      </Row>
     </div>
-  )
+	);
 }
 
 export default PaginaPrivada;

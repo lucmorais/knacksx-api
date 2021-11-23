@@ -1,29 +1,31 @@
 import router from "next/router";
+import styles from '../styles/SideBar.module.css';
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, ListGroup } from "react-bootstrap";
+import { ProSidebar, MenuItem, SubMenu, Menu } from 'react-pro-sidebar';
+import 'react-pro-sidebar/dist/css/styles.css';
 
 interface NavegacaoCandidatoProps {
-    opcao: string;
-    path: string;
-    id: number;
+    opcao: string[];
+    path: string[];
 }
 
 export function NavegacaoCandidato(props: NavegacaoCandidatoProps) {
     return (
-        <div>
-            <Button onClick={() => router.push(`/${props.path}`)}>
-                <Card
-                    bg="info"
-                    text="dark"
-                    style={{ width: '18rem' }}
-                    className="mb-2"
-                >
-                    <Card.Header>{props.opcao}</Card.Header>
-                    <Card.Body>
-                        <Card.Title>{props.opcao}</Card.Title>
-                    </Card.Body>
-                </Card>
-            </Button>
-        </div>
+        <ProSidebar className="mr-0">
+            <Menu iconShape="square">
+                {props.opcao.map((op, index) => {
+                    return (
+                        <MenuItem 
+                            key={index} 
+                            className="border-0 bg-dark text-light" 
+                            onClick={() => router.push(`/${props.path[index]}`)}
+                        >
+                            {op}
+                        </MenuItem>
+                    )
+                })}
+            </Menu>
+        </ProSidebar>
     )
 }

@@ -19,6 +19,7 @@ export function withAuth(func: any, path: string) {
         const result = await func(ctx, cookies, payload);
         if ('props' in result) {
             result.props = {
+                cookies,
                 payload,
                 ...result.props,
             };

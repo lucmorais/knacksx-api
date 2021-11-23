@@ -1,6 +1,7 @@
 import React from "react";
+import styles from "../styles/Layout.module.css";
 import { Col, Container, Row} from "react-bootstrap";
-import { Cabecalho } from "./Cabecalho";
+import { NavegacaoCandidato } from "./NavegacaoCandidato";
 
 interface LayoutProps {
     nome: string;
@@ -9,9 +10,10 @@ interface LayoutProps {
 
 export function Layout(props: LayoutProps) {
     return (
-        <Container className="pb-5">
-            <Cabecalho>{props.nome}</Cabecalho>
-            {props.children}
-        </Container>
+        <div className={"h-100"}>
+            <Row className="h-100">
+                {props.children}
+            </Row>
+        </div>
     )
 }

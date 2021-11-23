@@ -14,14 +14,14 @@ export class AuthService {
         const usuario = await this.usuarioService.listar_email(email_usuario);
 
         if (usuario && usuario.senha === senha_usuario) {
-            const { id, nome, email } = usuario;
-            return { id: id, nome, email};
+            const { id, nome, email, tipo } = usuario;
+            return { id: id, nome, email, role: tipo};
         }
         return null;
     }
 
     async login(user: any) {
-        const payload = { username: user.nome, sub: user.id };
+        const payload = { username: user.nome, sub: user.id, role: user.role };
         
         return {
             access_token: this.jwtService.sign(payload),
