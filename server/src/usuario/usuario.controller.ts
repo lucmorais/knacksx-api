@@ -121,7 +121,8 @@ export class UsuarioController {
             return error;
         }
     }
-    
+
+    /*
     @Post('/experiencias')
     async adicionar_usuario_experiencia(@Body() usuario_experiencia: Usuario_Experiencia): Promise<any | Error> {
         try {
@@ -130,8 +131,9 @@ export class UsuarioController {
         } catch (error) {
             return error;
         }
-    }
+    }*/
 
+    /*
     @Put('/experiencias/:id')
     async atualizar_usuario_experiencia(@Param() param, @Body() usuario_experiencia: Usuario_Experiencia): Promise<Usuario_Experiencia | Error> {
         try {
@@ -139,7 +141,7 @@ export class UsuarioController {
         } catch (error) {
             return error;
         }
-    }
+    }*/
 
     @Delete('/experiencias/:id')
     async deletar_usuario_experiencia(@Param() param, @Res() res: Response): Promise<any | Error>{

@@ -57,7 +57,6 @@ export class HabilidadeController {
     @Delete(':id_usuario/u_h/:id_habilidade')
     async deletar(@Param() param, @Res() res: Response): Promise<any | Error>{
         this.usuarios_habilidadesService.deletar(param.id_usuario, param.id_habilidade);
-        console.log("cheguei");
         try {
             this.habilidadesService.deletar(param.id_habilidade);
             return res.json();

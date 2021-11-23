@@ -14,16 +14,6 @@ export class Usuario_Experiencia extends Model {
         autoIncrement: true
     })
     id: number;
-    
-    @Column({
-        type: DataType.DATEONLY
-    })
-    data_inicio: Date;
-
-    @Column({
-        type: DataType.DATEONLY
-    })
-    data_fim: Date;
 
     @ForeignKey(() => Usuario)
     @Column

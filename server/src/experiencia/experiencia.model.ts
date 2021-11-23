@@ -1,6 +1,7 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
 import { Usuario } from "../usuario/usuario.model";
 import { Usuario_Experiencia } from "../usuario-experiencia/usuario-experiencia.model";
+import { DatabaseError } from "sequelize";
 
 @Table({
     freezeTableName: true,
@@ -25,6 +26,16 @@ export class Experiencia extends Model {
         type: DataType.TEXT
     })
     atividades: string;
+
+    @Column({
+        type: DataType.DATEONLY
+    })
+    data_inicio: Date;
+
+    @Column({
+        type: DataType.DATEONLY
+    })
+    data_fim: Date;
 
     @BelongsToMany(() => Usuario, () => Usuario_Experiencia)
     usuarios: Usuario[]
