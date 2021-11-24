@@ -5,25 +5,33 @@ import { http } from '../utils/http';
 import { withAuth } from '../utils/withAuth';
 import { Layout } from '../components/Layout';
 import { NavegacaoCandidato } from '../components/NavegacaoCandidato';
-import { Col, ListGroup, Row } from 'react-bootstrap';
+import { Button, Col, ListGroup, Row } from 'react-bootstrap';
+import { NavegacaoGestor } from '../components/NavegacaoGestor';
+import { TabelaGestor } from '../components/TabelaGestor';
+import { ItensTabelaGestor } from '../components/ItensTabelaGestor';
 
 interface HomePageProps{
   username: string;
   userId: number;
   role: string;
+  cookies: any;
   payload: any;
 }
 
 const Home: NextPage<HomePageProps> = (props) => {
-  const [opcoes] = useState<string[]>(['Home', 'Habilidades', 'Experiencias']);
+  http.defaults.headers.common['Authorization'] = `Bearer ${props.cookies.token}`;
+  
+  const [opcoesCandidato] = useState<string[]>(['Home', 'Habilidades', 'Experiencias']);
+  const [opcoesGestor] = useState<string[]>(['Home']);
   const [paths] = useState<string[]>(['/', 'habilidade', 'experiencia']);
+  const [candidatos, setCandidatos] = useState<any[]>([]);
 
   if(props.role == 'Candidato') {
     return (
       <div className="h-100">
         <Layout nome={props.username}>
           <Col sm={3}>
-            <NavegacaoCandidato opcao={opcoes} path={paths}/>
+            <NavegacaoCandidato opcao={opcoesCandidato} path={paths}/>
           </Col>
           <Col>
                 <h1>{props.role}</h1>
@@ -37,10 +45,26 @@ const Home: NextPage<HomePageProps> = (props) => {
     <div className="h-100">
       <Layout nome={props.username}>
         <Col sm={3}>
-          <NavegacaoCandidato opcao={opcoes} path={paths}/>
+          <NavegacaoGestor items={opcoesGestor} paths={paths}/>
         </Col>
         <Col>
-              <h1>{props.role}</h1>
+          <Button onClick={async () => {
+              const { data } = await http.get('usuarios');
+              setCandidatos(data);
+            }}
+          >
+            Listar candidatos
+          </Button>
+          {candidatos.length &&
+            <TabelaGestor>
+            {candidatos.map((candidato, index) => {
+              console.log(candidato);
+              return (
+                <ItensTabelaGestor key={index} candidatos={candidato}/>
+              )
+            })}
+            </TabelaGestor>
+          }
         </Col>
       </Layout>
     </div>

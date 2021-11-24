@@ -20,6 +20,7 @@ interface ExperienciaPageProps {
 }
 
 const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
+    http.defaults.headers.common['Authorization'] = `Bearer ${props.cookies.token}`;
 
     const [experiencias, setHabilidades] = useState<any[]>([]);
     const [componentTabela, setComponentTabela] = useState(false);
