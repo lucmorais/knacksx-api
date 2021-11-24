@@ -24,6 +24,15 @@ export class HabilidadeController {
             return error;
         }
     }
+
+    @Get()
+    async obter_todos(@Request() req): Promise<Habilidade[] | Error> {
+        try {
+            return this.habilidadesService.obter_todos();
+        } catch (error) {
+            return error;
+        }
+    }
     
     @Get(':id')
     async buscar_id(@Param() param): Promise<Habilidade | Error> {

@@ -50,6 +50,7 @@ const Home: NextPage<HomePageProps> = (props) => {
         <Col>
           <Button onClick={async () => {
               const { data } = await http.get('usuarios');
+              console.log(data);
               setCandidatos(data);
             }}
           >

@@ -1,6 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Usuario } from "./usuario.model";
 import { USUARIO_REPOSITORY } from "./constants";
+import { Habilidade } from "src/habilidade/habilidade.model";
+import { Experiencia } from "src/experiencia/experiencia.model";
 
 @Injectable()
 export class UsuarioService {
@@ -15,7 +17,16 @@ export class UsuarioService {
     }
 
     async listar_todos(): Promise<Usuario[]> {
-        return this.usuariosModel.findAll();
+        return this.usuariosModel.findAll({
+            include: [{
+                model: Habilidade,
+                required: true
+            },
+            {
+                model: Experiencia,
+                required: false
+            }]
+        });
     }
 
     async listar_email(email: string): Promise<Usuario> {

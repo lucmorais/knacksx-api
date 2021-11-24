@@ -10,6 +10,7 @@ export function TabelaGestor(props: any) {
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Habilidade</th>
+                    <th>Experiencia</th>
                 </tr>
             </thead>
             <tbody>

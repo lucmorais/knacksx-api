@@ -28,6 +28,15 @@ export class HabilidadeService {
         });
     }
 
+    async obter_todos(): Promise<Habilidade[]> {
+        return this.habilidadesModel.findAll({
+            include: {
+                model: Usuario,
+                required: true
+            }
+        });
+    }
+
     async listar_id(id: number): Promise<Habilidade> {
         return this.habilidadesModel.findByPk(id);
     }
