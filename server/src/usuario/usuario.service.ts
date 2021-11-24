@@ -29,6 +29,20 @@ export class UsuarioService {
         });
     }
 
+    async listar_todos_habilidade(titulo: string): Promise<Usuario[]> {
+        return this.usuariosModel.findAll({
+            include: [{
+                model: Habilidade,
+                where: {
+                    titulo: titulo
+                }},
+                {
+                    model: Experiencia,
+                    required: false
+                }]
+        });
+    }
+
     async listar_email(email: string): Promise<Usuario> {
         return this.usuariosModel.findOne({
             where: {

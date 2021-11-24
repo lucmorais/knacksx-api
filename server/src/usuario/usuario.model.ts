@@ -32,11 +32,6 @@ export class Usuario extends Model {
     email: string;
 
     @Column({
-        type: DataType.DATEONLY
-    })
-    data_nascimento: Date;
-
-    @Column({
         type: DataType.STRING(20),
         allowNull: false
     })

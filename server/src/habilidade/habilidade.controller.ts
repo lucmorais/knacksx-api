@@ -4,7 +4,6 @@ import { AnyAaaaRecord } from "dns";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { Habilidade } from "src/habilidade/habilidade.model";
 import { HabilidadeService } from "src/habilidade/habilidade.service";
-import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
 import { UsuarioHabilidadeService } from "src/usuario-habilidade/usuario-habilidade.service";
 
 @UseGuards(JwtAuthGuard)
