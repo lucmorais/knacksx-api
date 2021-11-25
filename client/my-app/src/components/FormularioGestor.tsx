@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
+import styles from '../styles/Layout.module.css';
 
 interface FormularioGestorProps {
     func: any;
@@ -13,7 +14,7 @@ export function FormularioGestor(props: FormularioGestorProps) {
                 <Form.Control id="habilidade" type="text" />
             </Form.Group>
             <Button variant="primary" type="submit">
-                Submit
+                Buscar
             </Button>
         </Form>
     )

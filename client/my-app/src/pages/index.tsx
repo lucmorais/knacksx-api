@@ -4,9 +4,8 @@ import styles from '../styles/Layout.module.css';
 import { http } from '../utils/http';
 import { withAuth } from '../utils/withAuth';
 import { Layout } from '../components/Layout';
-import { NavegacaoCandidato } from '../components/NavegacaoCandidato';
+import { Navegacao } from '../components/Navegacao';
 import { Button, Col, ListGroup, Row } from 'react-bootstrap';
-import { NavegacaoGestor } from '../components/NavegacaoGestor';
 import { TabelaGestor } from '../components/TabelaGestor';
 import { ItensTabelaGestor } from '../components/ItensTabelaGestor';
 import { FormularioGestor } from '../components/FormularioGestor';
@@ -27,6 +26,12 @@ const Home: NextPage<HomePageProps> = (props) => {
   const [paths] = useState<string[]>(['/', 'habilidade', 'experiencia']);
   const [candidatos, setCandidatos] = useState<any[]>([]);
   const [consultas, setConsulta] = useState<any[]>([]);
+  const [tabela, setTabela] = useState(false);
+
+  function logout() {
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.location.reload();
+  }
 
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -35,22 +40,15 @@ const Home: NextPage<HomePageProps> = (props) => {
 
     const {data} = await http.post('usuarios/habilidades/all', { habilidade });
 
-    console.log(data);
-
-    setConsulta(data);
-    setCandidatos([]);
+    setCandidatos(data);
+    setTabela(true);
   }
 
   if(props.role == 'Candidato') {
     return (
       <div className="h-100">
-        <Layout nome={props.username}>
-          <Col sm={3}>
-            <NavegacaoCandidato opcao={opcoesCandidato} path={paths}/>
-          </Col>
-          <Col>
-                <h1>{props.role}</h1>
-          </Col>
+        <Layout nome={props.username} func={logout} opcao={opcoesCandidato} path={paths}>
+
         </Layout>
       </div>
     )
@@ -58,40 +56,44 @@ const Home: NextPage<HomePageProps> = (props) => {
 
   return (
     <div className="h-100">
-      <Layout nome={props.username}>
-        <Col sm={3}>
-          <NavegacaoGestor items={opcoesGestor} paths={paths}/>
-        </Col>
-        <Col>
+      <Layout nome={props.username} func={logout} opcao={opcoesGestor} path={paths}>
+        <div className={styles.bordaFormulario}>
           <FormularioGestor func={submit}/>
-          <Button onClick={async () => {
-              const { data } = await http.get('usuarios');
-              setCandidatos(data);
-              setConsulta([]);
-            }}
-          >
-            Listar candidatos
-          </Button>
-          {consultas.length &&
-            <TabelaGestor>
-            {consultas.map((consulta, index) => {
-              return (
-                <ItensTabelaGestor key={index} candidatos={consulta}/>
-              )
-            })}
-            </TabelaGestor>
-          }
-          {candidatos.length &&
-            <TabelaGestor>
-            {candidatos.map((candidato, index) => {
-              console.log(candidato);
-              return (
-                <ItensTabelaGestor key={index} candidatos={candidato}/>
-              )
-            })}
-            </TabelaGestor>
-          }
-        </Col>
+          <ListGroup horizontal className="w-50">
+            <ListGroup.Item
+              variant="dark"
+              action
+              onClick={async () => {
+                const { data } = await http.get('usuarios');
+                setCandidatos(data);
+                setConsulta([]);
+                setTabela(true);
+              }}  
+            >
+              Listar Candidatos
+            </ListGroup.Item>
+            <ListGroup.Item action variant="dark">Listar usuarios</ListGroup.Item>
+          </ListGroup>
+        </div>
+        {tabela &&
+          <TabelaGestor>
+          {consultas.map((consulta, index) => {
+            return (
+              <ItensTabelaGestor key={index} candidatos={consulta}/>
+            )
+          })}
+          </TabelaGestor>
+        }
+        {tabela &&
+          <TabelaGestor>
+          {candidatos.map((candidato, index) => {
+            console.log(candidato);
+            return (
+              <ItensTabelaGestor key={index} candidatos={candidato}/>
+            )
+          })}
+          </TabelaGestor>
+        }
       </Layout>
     </div>
   )

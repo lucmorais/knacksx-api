@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import React, { FormEvent, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { FormularioExperiencia } from "../components/FormularioExperiencia";
 import { Icones } from "../components/Icones";
 import { ItensTabelaExperiencia } from "../components/ItensTabelaExperiencia";
 import { Layout } from "../components/Layout";
-import { NavegacaoCandidato } from "../components/NavegacaoCandidato";
+import { Navegacao } from "../components/Navegacao";
 import { Tabela } from "../components/Tabela";
 import { http } from "../utils/http";
 import { withAuth } from "../utils/withAuth";
@@ -36,10 +36,20 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
         'experiencia'
     ]);
 
+    function logout() {
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.location.reload();
+    }
+
     async function carregaExperiencias() {
         const {data} = await http.get(`experiencias/all/${props.userId}`);
         
         setHabilidades(data);
+
+        if(!Object.keys(data).length)
+            setComponentTabela(false);
+        else
+            setComponentTabela(true);
     }
 
     async function submit(event: FormEvent) {
@@ -58,45 +68,43 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
     if(props.role == 'Candidato') {
         return (
           <div className="h-100">
-            <Layout nome={props.username}>
-                <Col className="border border-danger">
-                    <NavegacaoCandidato opcao={opcoes} path={paths}/>
-                </Col>
-                <Col className="mb-5 mt-5 border border-warning" md={9}>
-                    <Col>
-                        <Button variant="primary" onClick={() => {
+            <Layout nome={props.username} opcao={opcoes} path={paths} func={logout}>
+                <ListGroup horizontal className="mb-5">
+                    <ListGroup.Item
+                        action
+                        variant="primary" 
+                        onClick={() => {
                             setComponentFormulario(true);
                             setComponentTabela(false);
-                        }}>Adicionar Experiencia</Button>
-                    </Col>
-                    <Col>
-                        <Button variant="primary" onClick={() => {
+                    }}>Adicionar Experiencia</ListGroup.Item>
+                    <ListGroup.Item
+                        action
+                        variant="primary" 
+                        onClick={() => {
                             carregaExperiencias();
-                            setComponentTabela(true);
                             setComponentFormulario(false);
-                        }}>Mostrar Experiencias cadastradas</Button>
-                    </Col>
-                    {componentFormulario && <FormularioExperiencia func={submit}/>}
-                    {componentTabela && experiencias &&
-                        <Tabela>
-                            {experiencias.map((experiencia, index) => {
-                                return (
-                                    <ItensTabelaExperiencia exps={experiencia}>
-                                        <td>
-                                            <Button onClick={async () => {
-                                                await http.delete(`experiencias/${props.userId}/u_e/${experiencia.id}`);
-                                                setTimeout(() => {
-                                                    carregaExperiencias();
-                                                },2000);
-                                            }}><Icones/>
-                                            </Button>
-                                        </td>
-                                    </ItensTabelaExperiencia>
-                                )
-                            })}
-                        </Tabela>
-                    }  
-                </Col>
+                    }}>Visualizar habilidades</ListGroup.Item>
+                </ListGroup>
+                {componentFormulario && <FormularioExperiencia func={submit}/>}
+                {componentTabela && experiencias &&
+                    <Tabela>
+                        {experiencias.map((experiencia, index) => {
+                            return (
+                                <ItensTabelaExperiencia exps={experiencia}>
+                                    <td>
+                                        <Button onClick={async () => {
+                                            await http.delete(`experiencias/${props.userId}/u_e/${experiencia.id}`);
+                                            setTimeout(() => {
+                                                carregaExperiencias();
+                                            },2000);
+                                        }}><Icones/>
+                                        </Button>
+                                    </td>
+                                </ItensTabelaExperiencia>
+                            )
+                        })}
+                    </Tabela>
+                }
             </Layout>
           </div>
         )
