@@ -117,7 +117,7 @@ const Home: NextPage<HomePageProps> = (props) => {
     return (
       <div className="h-100">
         <Layout func={logout} opcao={opcoesCandidato} path={paths}>
-          <h1 className={styles.layoutTitulo}>Bem vindo(a) {props.username}</h1>
+          <h1 className={styles.layoutTitulo}>Bem vindo(a) {dados.nome}</h1>
           {alerta && <Alerta cor={'success'} mensagem={alerta} />}
           <div className={styles.bordaPerfil}>
             <h3 className="text-center pb-3">Perfil</h3>
