@@ -13,10 +13,10 @@ export function ModalGestorExperiencia(props: ModalGestorExperienciaProps) {
         <Modal
             {...props}
             size="lg"
-            aria-labelledby="example-modal-sizes-title-lg"
+            aria-labelledby="experiencia"
         >
             <Modal.Header>
-                <Modal.Title id="example-modal-sizes-title-lg">
+                <Modal.Title id="experiencia">
                     {props.nome}
                 </Modal.Title>
             </Modal.Header>

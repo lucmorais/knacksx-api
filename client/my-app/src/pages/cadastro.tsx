@@ -32,46 +32,47 @@ const PaginaCadastro = () => {
         <div className={styles.principal}>
             <Container className={styles.container}>
                 <Row>
-                    <Col>
-                        <h1 className={styles.titulo}>Cadastro de usuário</h1>                   
-                        <Form method="post" onSubmit={submit}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Nome</Form.Label>
-                                <Form.Control id="nome" placeholder="Digite o nome" />
-                            </Form.Group>
+                    <h1 className={styles.titulo}>Cadastro de usuário</h1>
+                    <Form method="post" onSubmit={submit} className="w-50 mx-auto">
+                        <Form.Group className="mb-3">
+                            <Form.Label>Nome</Form.Label>
+                            <Form.Control id="nome" placeholder="Digite o nome" />
+                        </Form.Group>
 
-                            <Form.Group className="mb-3">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" id="email" placeholder="Digite o email" />
-                            </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" id="email" placeholder="Digite o email" />
+                        </Form.Group>
 
-                            <Form.Group className="mb-3">
-                                <Form.Label>Telefone</Form.Label>
-                                <Form.Control id="telefone" placeholder="Digite o telefone" />
-                            </Form.Group>
-                            
-                            <Form.Group className="mb-3">
-                                <Form.Label>Tipo</Form.Label>
-                                <Form.Select id="tipo" aria-label="Tipo de usuário">
-                                    <option>Selecione o tipo</option>
-                                    <option value="Candidato">Candidato</option>
-                                    <option value="Gestor">Gestor</option>
-                                </Form.Select>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Telefone</Form.Label>
+                            <Form.Control id="telefone" placeholder="Digite o telefone" />
+                        </Form.Group>
 
-                            </Form.Group>
-                    
-                            <Form.Group className="mb-3">
-                                <Form.Label>Senha</Form.Label>
-                                <Form.Control type="password" id="senha" placeholder="Digite a senha" />
-                            </Form.Group>
-                            
-                            <div className="text-center pt-4">
-                                <Button className={styles.botao} variant="primary" type="submit">
-                                    Cadastrar
-                                </Button>
-                            </div>
-                        </Form>
-                    </Col>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Tipo</Form.Label>
+                            <Form.Select id="tipo" aria-label="Tipo de usuário">
+                                <option>Selecione o tipo</option>
+                                <option value="Candidato">Candidato</option>
+                                <option value="Gestor">Gestor</option>
+                            </Form.Select>
+
+                        </Form.Group>
+            
+                        <Form.Group className="mb-3">
+                            <Form.Label>Senha</Form.Label>
+                            <Form.Control type="password" id="senha" placeholder="Digite a senha" />
+                        </Form.Group>
+                        
+                        <div className="d-flex justify-content-between pt-4">
+                            <Button className="d-inline" variant="primary" type="submit">
+                                Cadastrar
+                            </Button>
+                            <Button className="d-inline" variant="danger" onClick={() => router.push('/login')}>
+                                Voltar
+                            </Button>
+                        </div>
+                    </Form>
                 </Row>
             </Container>
         </div>

@@ -15,10 +15,10 @@ export function ModalGestor(props: ModalGestorProps) {
         <Modal
             {...props}
             size="lg"
-            aria-labelledby="example-modal-sizes-title-lg"
+            aria-labelledby="habilidade"
         >
             <Modal.Header closeButton>
-                <Modal.Title id="example-modal-sizes-title-lg">
+                <Modal.Title id="habilidade">
                     {props.nome}
                 </Modal.Title>
             </Modal.Header>
