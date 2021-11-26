@@ -111,6 +111,7 @@ const Home: NextPage<HomePageProps> = (props) => {
     const { data } = await http.put(`usuarios/${props.userId}`, { nome, email, telefone });
 
     mostraAlerta('Os dados foram atualizados');
+    buscarPerfil();
   }
 
   if(props.role == 'Candidato') {
