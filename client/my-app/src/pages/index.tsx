@@ -1,21 +1,23 @@
 import type { NextPage } from 'next';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import styles from '../styles/Layout.module.css';
 import { http } from '../utils/http';
 import { withAuth } from '../utils/withAuth';
 import { Layout } from '../components/Layout';
-import { Navegacao } from '../components/Navegacao';
-import { Button, Col, ListGroup, Row } from 'react-bootstrap';
 import { TabelaGestor } from '../components/TabelaGestor';
 import { ItensTabelaGestor } from '../components/ItensTabelaGestor';
 import { FormularioGestor } from '../components/FormularioGestor';
+import { ListaPerfil } from '../components/ListaPerfil';
+import { ListGroup } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 
 interface HomePageProps{
   username: string;
   userId: number;
   role: string;
+  email: string;
+  telefone: string;
   cookies: any;
-  payload: any;
 }
 
 const Home: NextPage<HomePageProps> = (props) => {
@@ -27,28 +29,93 @@ const Home: NextPage<HomePageProps> = (props) => {
   const [candidatos, setCandidatos] = useState<any[]>([]);
   const [consultas, setConsulta] = useState<any[]>([]);
   const [tabela, setTabela] = useState(false);
-
+  const [estado, setEstado] = useState(false);
+  const [contador, setContador] = useState(0);
+  const [dados, setDados] = useState<any>({});
+  const router = useRouter();
+  
+  useEffect(() => {
+    buscarPerfil();
+    submitListarTodos();
+  }, []);
+  
   function logout() {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    document.location.reload();
+    router.reload();
   }
 
-  async function submit(event: FormEvent) {
+  async function buscarPerfil() {
+    const {data} = await http.get(`usuarios/${props.userId}`);
+    setDados(data);
+  }
+
+  async function submitFiltroTodos(event: FormEvent) {
     event.preventDefault();
 
     const habilidade = (document.querySelector('#habilidade') as HTMLInputElement).value;
 
     const {data} = await http.post('usuarios/habilidades/all', { habilidade });
 
-    setCandidatos(data);
+    setContador(data.length);
+    setConsulta(data);
     setTabela(true);
+    setEstado(false);
+  }
+
+  //controller usuario - usuarios/all/habilidades
+  async function submitListarTodos() {
+    const { data } = await http.get('usuarios/todos');
+
+    setContador(data.length);
+    setCandidatos(data);
+    setTabela(false);
+    setEstado(true);
+  }
+
+  //controller usuario - usuarios/habilidades/experiencias
+  async function submitListarTodosHabsExps() {
+    const { data } = await http.get('usuarios/habilidades/experiencias');
+
+    console.log(data);
+    setContador(data.length);
+    setCandidatos(data);
+    setTabela(false);
+    setEstado(true);
+  }
+
+
+  //controller usuario - usuarios
+  async function submitFiltroHabilidade() {
+    const { data } = await http.get('usuarios');
+
+    setContador(data.length);
+    setCandidatos(data);
+    setTabela(false);
+    setEstado(true);
+  }
+
+  async function submitPerfil(event: FormEvent) {
+    event.preventDefault();
+
+    const nome = (document.querySelector('#nome') as HTMLInputElement).value;
+    const email = (document.querySelector('#email') as HTMLInputElement).value;
+    const telefone = (document.querySelector('#telefone') as HTMLInputElement).value;
+
+    const { data } = await http.put(`usuarios/${props.userId}`, { nome, email, telefone });
   }
 
   if(props.role == 'Candidato') {
     return (
       <div className="h-100">
-        <Layout nome={props.username} func={logout} opcao={opcoesCandidato} path={paths}>
-
+        <Layout func={logout} opcao={opcoesCandidato} path={paths}>
+          <h1 className={styles.layoutTitulo}>Bem vindo(a) {props.username}</h1>
+          <div className={styles.bordaPerfil}>
+            <h3 className="text-center pb-3">Perfil</h3>
+            <ListaPerfil 
+              infs={{nome: dados.nome, email: dados.email, telefone: dados.telefone}}
+              func={submitPerfil}
+            />
+          </div>
         </Layout>
       </div>
     )
@@ -56,40 +123,50 @@ const Home: NextPage<HomePageProps> = (props) => {
 
   return (
     <div className="h-100">
-      <Layout nome={props.username} func={logout} opcao={opcoesGestor} path={paths}>
+      <Layout func={logout} opcao={opcoesGestor} path={paths}>
+        <h1 className={styles.layoutTitulo}>Bem vindo(a) {props.username}</h1>
         <div className={styles.bordaFormulario}>
-          <FormularioGestor func={submit}/>
-          <ListGroup horizontal className="w-50">
+          <h4 className="mb-5 text-center">Filtro</h4>
+          <FormularioGestor func={submitFiltroTodos}/>
+          <ListGroup horizontal className="w-100 mt-3">
             <ListGroup.Item
               variant="dark"
               action
-              onClick={async () => {
-                const { data } = await http.get('usuarios');
-                setCandidatos(data);
-                setConsulta([]);
-                setTabela(true);
-              }}  
+              onClick={submitFiltroHabilidade}  
             >
-              Listar Candidatos
+              Listar candidatos com habilidades cadastradas
             </ListGroup.Item>
-            <ListGroup.Item action variant="dark">Listar usuarios</ListGroup.Item>
+            <ListGroup.Item 
+              action 
+              variant="dark" 
+              onClick={submitListarTodosHabsExps}
+            >
+              Listar candidatos com habilidade e experiencia
+            </ListGroup.Item>
+            <ListGroup.Item 
+              action 
+              variant="dark" 
+              onClick={submitListarTodos}
+            >
+              Listar todos candidatos
+            </ListGroup.Item>
           </ListGroup>
         </div>
+        <h6 className={styles.margemTitulos}>Resultado da pesquisa: {contador}</h6>
         {tabela &&
           <TabelaGestor>
           {consultas.map((consulta, index) => {
             return (
-              <ItensTabelaGestor key={index} candidatos={consulta}/>
+              <ItensTabelaGestor key={index} func={submitListarTodos} candidatos={consulta}/>
             )
           })}
           </TabelaGestor>
         }
-        {tabela &&
+        {estado &&
           <TabelaGestor>
           {candidatos.map((candidato, index) => {
-            console.log(candidato);
             return (
-              <ItensTabelaGestor key={index} candidatos={candidato}/>
+              <ItensTabelaGestor key={index} func={submitListarTodos} candidatos={candidato}/>
             )
           })}
           </TabelaGestor>

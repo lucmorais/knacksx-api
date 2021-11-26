@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 
 interface ModalGestorExperienciaProps {
     exps: any;
@@ -21,9 +21,22 @@ export function ModalGestorExperiencia(props: ModalGestorExperienciaProps) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h1>{props.exps.empresa}</h1>
-                <h1>{props.exps.area}</h1>
-                <h1>{props.exps.atividades}</h1>
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                        <th>Empresa</th>
+                        <th>Area/Cargo</th>
+                        <th>Atividades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{props.exps.empresa}</td>
+                            <td>{props.exps.area}</td>
+                            <td>{props.exps.atividades}</td>
+                        </tr>
+                    </tbody>  
+                </Table>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={props.onHide}>

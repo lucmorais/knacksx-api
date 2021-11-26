@@ -7,10 +7,12 @@ export function TabelaGestor(props: any) {
         <Table striped bordered hover variant="dark">
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Habilidade</th>
-                    <th>Experiencia</th>
+                    <th className="w-25">Nome</th>
+                    <th className="w-25">Email</th>
+                    <th className="w-25">Telefone</th>
+                    <th className="w-25">Habilidade</th>
+                    <th className="w-25">Experiencia</th>
+                    <th className="w-25">Ação</th>
                 </tr>
             </thead>
             <tbody>

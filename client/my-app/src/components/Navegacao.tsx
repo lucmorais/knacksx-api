@@ -2,7 +2,6 @@ import router from "next/router";
 import styles from '../styles/SideBar.module.css';
 import React from "react";
 import { Card, Button, ListGroup, Navbar, Nav, Container, Row } from "react-bootstrap";
-import 'react-pro-sidebar/dist/css/styles.css';
 
 interface NavegacaoProps {
     opcao: string[];

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, CloseButton, ListGroup, Modal } from 'react-bootstrap';
+import { http } from '../utils/http';
+import { Icones } from './Icones';
 import { ModalGestor } from './ModalGestor';
 import { ModalGestorExperiencia } from './ModalGestorExperiencia';
 
 interface ItensTabelaGestorProps {
     candidatos: any;
+    func: any;
 }
 
 export function ItensTabelaGestor(props: ItensTabelaGestorProps) {
@@ -12,12 +15,21 @@ export function ItensTabelaGestor(props: ItensTabelaGestorProps) {
     const [showExperiencia, setShowExperiencia] = useState(false);
     const [habilidade, setHabilidade] = useState({});
     const [experiencia, setExperiencia] = useState({});
+    console.log(props.candidatos);
+
+    async function deletarCandidato(id: any) {
+        const { data } = await http.delete(`usuarios/${id}`);
+        setTimeout(() => {
+            props.func();
+        },1000);
+    }
 
     return (
         <tr>
-            <td>{props.candidatos.nome}</td>
-            <td>{props.candidatos.email}</td>
-            <td>
+            <td className="align-middle">{props.candidatos.nome}</td>
+            <td className="align-middle">{props.candidatos.email}</td>
+            <td className="align-middle">{props.candidatos.telefone}</td>
+            <td className="text-center align-middle">
                 <ListGroup>
                     {props.candidatos.habilidades.map((_hab: any, _index: any) => {
                         return(
@@ -41,7 +53,7 @@ export function ItensTabelaGestor(props: ItensTabelaGestorProps) {
                     })}
                 </ListGroup>
             </td>
-            <td>
+            <td className="text-center align-middle">
                 <ListGroup>
                     {props.candidatos.experiencias.map((_exp: any, _index: any) => {
                         return(
@@ -64,6 +76,11 @@ export function ItensTabelaGestor(props: ItensTabelaGestorProps) {
                         )
                     })}
                 </ListGroup>
+            </td>
+            <td className="align-middle">
+                <Button onClick={() => deletarCandidato(props.candidatos.id)}>
+                    <Icones/>
+                </Button>
             </td>
         </tr>
     )

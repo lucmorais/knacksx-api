@@ -1,6 +1,5 @@
 import React from "react";
-import { ListGroup, Table } from "react-bootstrap";
-import { ItensTabela } from "./ItensTabela";
+import { Table } from "react-bootstrap";
 
 export function Tabela(props: any) {
     return (

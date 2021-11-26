@@ -8,6 +8,8 @@ import { Tabela } from '../components/Tabela';
 import { FormularioHabilidade } from '../components/FormularioHabilidade';
 import { ItensTabela } from '../components/ItensTabela';
 import { Icones } from '../components/Icones';
+import styles from '../styles/Habilidade.module.css';
+import { useRouter } from "next/router";
 
 interface HabilidadePageProps {
     username: string
@@ -35,10 +37,11 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         'habilidade',
         'experiencia'
     ]);
+    const router = useRouter();
 
     function logout() {
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.location.reload();
+        router.reload();
     }
 
     async function carregaHabilidades() {
@@ -51,7 +54,7 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         else
             setComponentTabela(true);
     }
-
+    
     async function submit(event: FormEvent) {
         event.preventDefault();
 
@@ -67,15 +70,16 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
     if(props.role == 'Candidato') {
         return (
           <div className="h-100">
-            <Layout nome={props.username} opcao={opcoes} path={paths} func={logout}>
-                <ListGroup horizontal className="mb-5">
+            <Layout opcao={opcoes} path={paths} func={logout}>
+                <h2 className={styles.margemTitulo}>Habilidade</h2>
+                <ListGroup horizontal className="mb-4">
                     <ListGroup.Item
                         action
                         variant="primary" 
                         onClick={() => {
                             setComponentFormulario(true);
                             setComponentTabela(false);
-                    }}>Adicionar Habilidade</ListGroup.Item>
+                    }}>Adicionar habilidade</ListGroup.Item>
                     <ListGroup.Item
                         action
                         variant="primary" 

@@ -1,14 +1,13 @@
 .principal {
-    height: 100vh;
-    background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-    display: flex;
-    align-items: center;
+    height: 100%;
+    padding-top: 50px;
 }
 
 .container {
     background: #cad3d9;
-    padding-top: 3em;
-    padding-bottom: 3em;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    margin-bottom:200px;
     max-width: 50%;
     border-radius: 20px;
 }

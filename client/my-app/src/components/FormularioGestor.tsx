@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import styles from '../styles/Layout.module.css';
 
 interface FormularioGestorProps {
@@ -10,10 +10,11 @@ export function FormularioGestor(props: FormularioGestorProps) {
     return (
         <Form method="post" onSubmit={props.func}>
             <Form.Group className="mb-3">
-                <Form.Label>Habilidade</Form.Label>
-                <Form.Control id="habilidade" type="text" />
+                <FloatingLabel label="Digite a habilidade">
+                    <Form.Control type="text" id="habilidade" placeholder="Digite a habilidade" />
+                </FloatingLabel>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" className="w-100" type="submit">
                 Buscar
             </Button>
         </Form>

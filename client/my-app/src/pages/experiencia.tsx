@@ -9,7 +9,8 @@ import { Navegacao } from "../components/Navegacao";
 import { Tabela } from "../components/Tabela";
 import { http } from "../utils/http";
 import { withAuth } from "../utils/withAuth";
-import styles from '../styles/SideBar.module.css';
+import styles from '../styles/Experiencia.module.css';
+import { useRouter } from "next/router";
 
 interface ExperienciaPageProps {
     username: string
@@ -35,10 +36,11 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
         'habilidade',
         'experiencia'
     ]);
+    const router = useRouter();
 
     function logout() {
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.location.reload();
+        router.reload();
     }
 
     async function carregaExperiencias() {
@@ -68,22 +70,23 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
     if(props.role == 'Candidato') {
         return (
           <div className="h-100">
-            <Layout nome={props.username} opcao={opcoes} path={paths} func={logout}>
-                <ListGroup horizontal className="mb-5">
+            <Layout opcao={opcoes} path={paths} func={logout}>
+                <h2 className={styles.margemTitulo}>Experiencia</h2>
+                <ListGroup horizontal className="mb-4">
                     <ListGroup.Item
                         action
                         variant="primary" 
                         onClick={() => {
                             setComponentFormulario(true);
                             setComponentTabela(false);
-                    }}>Adicionar Experiencia</ListGroup.Item>
+                    }}>Adicionar experiencia</ListGroup.Item>
                     <ListGroup.Item
                         action
                         variant="primary" 
                         onClick={() => {
                             carregaExperiencias();
                             setComponentFormulario(false);
-                    }}>Visualizar habilidades</ListGroup.Item>
+                    }}>Visualizar experiencias</ListGroup.Item>
                 </ListGroup>
                 {componentFormulario && <FormularioExperiencia func={submit}/>}
                 {componentTabela && experiencias &&

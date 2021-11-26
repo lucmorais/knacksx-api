@@ -4,7 +4,6 @@ import { Col, Container, Row} from "react-bootstrap";
 import { Navegacao} from "./Navegacao";
 
 interface LayoutProps {
-    nome: string;
     children: any;
     func?: any;
     opcao: any;
@@ -16,7 +15,6 @@ export function Layout(props: LayoutProps) {
         <Container className="pb-5">
             <Navegacao func={props.func} opcao={props.opcao} path={props.path}/>
             <Row className={styles.formularioGestor}>
-                <h1 className={styles.layoutTitulo}>Bem vindo(a) {props.nome}</h1>
                 {props.children}
             </Row>
         </Container>

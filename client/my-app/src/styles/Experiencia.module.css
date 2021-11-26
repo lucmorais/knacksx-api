@@ -1,0 +1,21 @@
+.experienciaLayout {
+    margin-top: 6em;
+    margin-bottom: 1em;
+}
+
+.bordaFormulario {
+    padding-top: 10px;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    border: 0.2rem solid #d4c9c9;
+}
+
+.margemTitulo {
+    margin-top: 3em;
+    margin-bottom: 1em;
+}
+
+.tituloFormulario {
+    padding-bottom: 20px;
+    text-align: center;
+}

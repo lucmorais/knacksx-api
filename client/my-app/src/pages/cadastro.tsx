@@ -11,13 +11,15 @@ const PaginaCadastro = () => {
 
         const nome = (document.querySelector('#nome') as HTMLInputElement).value;
         const email = (document.querySelector('#email') as HTMLInputElement).value;
+        const telefone = (document.querySelector('#telefone') as HTMLInputElement).value;
         const tipo = (document.querySelector('#tipo') as HTMLInputElement).value;
         const senha = (document.querySelector('#senha') as HTMLInputElement).value;
 
         const { data } = await http.post('usuarios', { 
             nome,
-            tipo, 
+            tipo,
             email,
+            telefone,
             senha
         });
 
@@ -41,6 +43,11 @@ const PaginaCadastro = () => {
                             <Form.Group className="mb-3">
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control type="email" id="email" placeholder="Digite o email" />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>Telefone</Form.Label>
+                                <Form.Control id="telefone" placeholder="Digite o telefone" />
                             </Form.Group>
                             
                             <Form.Group className="mb-3">
