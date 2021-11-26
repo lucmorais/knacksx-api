@@ -18,6 +18,38 @@ export class UsuarioService {
 
     async listar_todos(): Promise<Usuario[]> {
         return this.usuariosModel.findAll({
+            where: {
+                tipo: 'Candidato'
+            },
+            order: [
+                ['nome', 'ASC']
+            ],
+            include: [{
+                model: Habilidade,
+                required: false
+            },
+            {
+                model: Experiencia,
+                required: false
+            }]
+        });
+    }
+
+    async listar_todos_experiencia(): Promise<Usuario[]> {
+        return this.usuariosModel.findAll({
+            include: [{
+                model: Habilidade,
+                required: false
+            },
+            {
+                model: Experiencia,
+                required: true
+            }]
+        });
+    }
+
+    async listar_todos_habilidade(): Promise<Usuario[]> {
+        return this.usuariosModel.findAll({
             include: [{
                 model: Habilidade,
                 required: true
@@ -29,7 +61,20 @@ export class UsuarioService {
         });
     }
 
-    async listar_todos_habilidade(titulo: string): Promise<Usuario[]> {
+    async buscar_todos_habilidade_experiencia(): Promise<Usuario[]> {
+        return this.usuariosModel.findAll({
+            include: [{
+                model: Habilidade,
+                required: true
+            },
+            {
+                model: Experiencia,
+                required: true
+            }]
+        });
+    }
+
+    async buscar_todos_habilidade(titulo: string): Promise<Usuario[]> {
         return this.usuariosModel.findAll({
             include: [{
                 model: Habilidade,

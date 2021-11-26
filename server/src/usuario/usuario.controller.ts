@@ -14,10 +14,37 @@ export class UsuarioController {
         private usuarios_habilidadesService: UsuarioHabilidadeService
         ) {}
     
-    @Get()
+    @Get('todos')
     async buscar_todos(): Promise<Usuario[] | Error> {
         try {
             return this.usuariosService.listar_todos();
+        } catch (error) {
+            return error;
+        }
+    }
+
+    @Get('habilidades/experiencias')
+    async buscar_todos_habilidade_experiencia(): Promise<Usuario[] | Error> {
+        try {
+            return this.usuariosService.buscar_todos_habilidade_experiencia();
+        } catch (error) {
+            return error;
+        }
+    }
+
+    @Get('experiencia/todos')
+    async listar_todos_experiencia(): Promise<Usuario[] | Error> {
+        try {
+            return this.usuariosService.listar_todos_experiencia();
+        } catch (error) {
+            return error;
+        }
+    }
+
+    @Get()
+    async listar_todos_habilidade(): Promise<Usuario[] | Error> {
+        try {
+            return this.usuariosService.listar_todos_habilidade();
         } catch (error) {
             return error;
         }
@@ -27,7 +54,7 @@ export class UsuarioController {
     async buscar_todos_habilidade(@Body() titulo): Promise<Usuario[] | Error> {
         console.log(titulo);
         try {
-            return this.usuariosService.listar_todos_habilidade(titulo.habilidade);
+            return this.usuariosService.buscar_todos_habilidade(titulo.habilidade);
         } catch (error) {
             return error;
         }

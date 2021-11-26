@@ -32,6 +32,12 @@ export class Usuario extends Model {
     email: string;
 
     @Column({
+        type: DataType.STRING(11),
+        allowNull: false
+    })
+    telefone: string;
+
+    @Column({
         type: DataType.STRING(20),
         allowNull: false
     })
