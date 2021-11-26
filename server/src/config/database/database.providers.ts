@@ -13,8 +13,8 @@ export const databaseProviders = [
             dialect: 'mysql',
             host: 'localhost',
             port: 3306,
-            username: 'root',
-            password: '29101996',
+            username: process.env.USUARIO_BD,
+            password: process.env.SENHA_BD,
             database: 'wise',
           });
           sequelize.addModels([

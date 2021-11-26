@@ -2,6 +2,7 @@ html, body {
     height: 100%;
     background:#f9f9f9;
     overflow-x: visible;
+    font-family: 'Montserrat', sans-serif;
 }
 
 #__next {

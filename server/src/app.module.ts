@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { HabilidadeController } from './habilidade/habilidade.controller';
 import { UsuarioController } from './usuario/usuario.controller';
@@ -13,6 +14,7 @@ import { UsuarioHabilidadeModule } from './usuario-habilidade/usuario-habilidade
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     DataBaseModule,
     AuthModule,
     UsuarioModule,
