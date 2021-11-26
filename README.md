@@ -4,7 +4,7 @@ Aplicação para cadastro de habilidades e experiências por parte do candidato 
 
 ## Client
 
-Primeiro navegue até o diretório client/my-pp, em seguida, para instalar os módulos necessários para execução da aplicação, execute:
+Primeiro navegue até o diretório **client/my-pp**, em seguida, para instalar os módulos necessários para execução da aplicação, execute:
 
 ```bash
 npm install
@@ -20,7 +20,7 @@ Abra [http://localhost:3000](http://localhost:3000) no browser para abrir a apli
 
 ## API-REST
 
-Primeiro navegue até o diretório server, em seguida, para instalar os módulos necessários para execução da aplicação, execute:
+Primeiro navegue até o diretório **server**, em seguida, para instalar os módulos necessários para execução da aplicação, execute:
 
 ```bash
 npm install
