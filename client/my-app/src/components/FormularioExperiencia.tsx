@@ -17,13 +17,13 @@ export function FormularioExperiencia(props: FormularioExperienciaProps) {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                    <Form.Label>Área</Form.Label>
+                    <Form.Label>Área/Cargo</Form.Label>
                     <Form.Control id="area" placeholder="Area" />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                     <Form.Label>Atividades desenvolvidas</Form.Label>
-                    <Form.Control id="atividades"/>
+                    <Form.Control as="textarea" rows={3} id="atividades"/>
                 </Form.Group>
 
                 <Button variant="primary" type="submit">

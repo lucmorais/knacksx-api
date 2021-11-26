@@ -50,7 +50,7 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         setAlerta(mensagem);
         setTimeout(() => {
             setAlerta('');
-        }, 3000);
+        }, 2000);
     }
 
     async function carregaHabilidades() {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, CloseButton, ListGroup, Modal } from 'react-bootstrap';
 import { http } from '../utils/http';
+import { Alerta } from './Alerta';
 import { Icones } from './Icones';
 import { ModalGestor } from './ModalGestor';
 import { ModalGestorExperiencia } from './ModalGestorExperiencia';
@@ -15,7 +16,6 @@ export function ItensTabelaGestor(props: ItensTabelaGestorProps) {
     const [showExperiencia, setShowExperiencia] = useState(false);
     const [habilidade, setHabilidade] = useState({});
     const [experiencia, setExperiencia] = useState({});
-    console.log(props.candidatos);
 
     async function deletarCandidato(id: any) {
         const { data } = await http.delete(`usuarios/${id}`);

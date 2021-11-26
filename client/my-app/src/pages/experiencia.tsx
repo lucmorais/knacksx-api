@@ -49,7 +49,7 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
         setAlerta(mensagem);
         setTimeout(() => {
             setAlerta('');
-        }, 3000);
+        }, 2000);
     }
 
     async function carregaExperiencias() {
@@ -57,10 +57,13 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
         
         setHabilidades(data);
 
-        if(!Object.keys(data).length)
+        if(!Object.keys(data).length) {
             setComponentTabela(false);
-        else
+            mostraAlerta('Nenhuma experiencia cadastrada');
+        }
+        else {
             setComponentTabela(true);
+        }
     }
 
     async function submit(event: FormEvent) {

@@ -1,11 +1,21 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import styles from "../styles/FormCadastro.module.css";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { http } from "../utils/http";
 import router from "next/router";
+import { Alerta } from "../components/Alerta";
 
 
 const PaginaCadastro = () => {
+    const [alerta, setAlerta] = useState('');
+
+    function mostraAlerta(mensagem: string) {
+        setAlerta(mensagem);
+        setTimeout(() => {
+            setAlerta('');
+        }, 3000);
+    }
+
     async function submit(event: FormEvent) {
         event.preventDefault();
 
@@ -22,9 +32,13 @@ const PaginaCadastro = () => {
             telefone,
             senha
         });
-
+    
+        
         if (data) {
-            router.push('/login');
+            mostraAlerta('Cadastro efetuado');
+            setTimeout(() => {
+                router.push('/login');
+            }, 2000);
         }
     }
 
@@ -32,8 +46,9 @@ const PaginaCadastro = () => {
         <div className={styles.principal}>
             <Container className={styles.container}>
                 <Row>
+                    {alerta && <Alerta mensagem={alerta} cor={'success'}/>}
                     <h1 className={styles.titulo}>Cadastro de usuário</h1>
-                    <Form method="post" onSubmit={submit} className="w-50 mx-auto">
+                    <Form method="post" onSubmit={submit} className="w-75 mx-auto">
                         <Form.Group className="mb-3">
                             <Form.Label>Nome</Form.Label>
                             <Form.Control id="nome" placeholder="Digite o nome" />

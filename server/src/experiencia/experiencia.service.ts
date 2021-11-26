@@ -44,7 +44,12 @@ export class ExperienciaService {
     }
 
     async deletar(id: number) {
-        const experiencia: Experiencia = await this.listar_id(id);
-        experiencia.destroy();
+        try {
+            const experiencia: Experiencia = await this.listar_id(id);
+            experiencia.destroy();
+        } catch (error) {
+            const experiencia: Experiencia = await this.listar_id(id);
+            experiencia.destroy();
+        }
     }
 }

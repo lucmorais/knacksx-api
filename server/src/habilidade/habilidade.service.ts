@@ -53,7 +53,12 @@ export class HabilidadeService {
     }
 
     async deletar(id: number) {
-        const habilidade: Habilidade = await this.listar_id(id);
-        habilidade.destroy();
+        try {
+            const habilidade: Habilidade = await this.listar_id(id);
+            habilidade.destroy();
+        } catch (error) {
+            const habilidade: Habilidade = await this.listar_id(id);
+            habilidade.destroy();
+        }
     }
 }

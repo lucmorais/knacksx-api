@@ -112,7 +112,12 @@ export class UsuarioService {
     }
 
     async deletar(id: number) {
-        const usuario: Usuario = await this.listar_id(id);
-        usuario.destroy();
+        try {
+            const usuario: Usuario = await this.listar_id(id);
+            usuario.destroy();
+        } catch (error) {
+            const usuario: Usuario = await this.listar_id(id);
+            usuario.destroy();
+        }
     }
 }

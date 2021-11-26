@@ -43,7 +43,12 @@ export class UsuarioExperienciaService {
     }*/
 
     async deletar(id_usuario: number, id_experiencia?: number) {
-        const usuario_experiencia: Usuario_Experiencia = await this.listar_id(id_usuario, id_experiencia);
-        usuario_experiencia.destroy();
+        try {
+            const usuario_experiencia: Usuario_Experiencia = await this.listar_id(id_usuario, id_experiencia);
+            usuario_experiencia.destroy();
+        } catch (error) {
+            const usuario_experiencia: Usuario_Experiencia = await this.listar_id(id_usuario, id_experiencia);
+            usuario_experiencia.destroy();
+        }
     }
 }
