@@ -11,6 +11,7 @@ import { http } from "../utils/http";
 import { withAuth } from "../utils/withAuth";
 import styles from '../styles/Experiencia.module.css';
 import { useRouter } from "next/router";
+import { Alerta } from "../components/Alerta";
 
 interface ExperienciaPageProps {
     username: string
@@ -36,11 +37,19 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
         'habilidade',
         'experiencia'
     ]);
+    const [alerta, setAlerta] = useState('');
     const router = useRouter();
 
     function logout() {
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         router.reload();
+    }
+    
+    function mostraAlerta(mensagem: string) {
+        setAlerta(mensagem);
+        setTimeout(() => {
+            setAlerta('');
+        }, 3000);
     }
 
     async function carregaExperiencias() {
@@ -63,8 +72,10 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
         
         document.forms[0].reset();
 
-        await http.post(`experiencias/${props.userId}`, { empresa, area, atividades });
+        const { data } = await http.post(`experiencias/${props.userId}`, { empresa, area, atividades });
         
+        if(data) 
+            mostraAlerta('Experiencia adicionada com sucesso');
     }
 
     if(props.role == 'Candidato') {
@@ -72,7 +83,7 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
           <div className="h-100">
             <Layout opcao={opcoes} path={paths} func={logout}>
                 <h2 className={styles.margemTitulo}>Experiencia</h2>
-                <ListGroup horizontal className="mb-4">
+                <ListGroup horizontal className={styles.listaExperiencia}>
                     <ListGroup.Item
                         action
                         variant="primary" 
@@ -88,16 +99,21 @@ const Experiencia: NextPage<ExperienciaPageProps> = (props) => {
                             setComponentFormulario(false);
                     }}>Visualizar experiencias</ListGroup.Item>
                 </ListGroup>
+                {alerta && <Alerta cor={'success'} mensagem={alerta} />}
                 {componentFormulario && <FormularioExperiencia func={submit}/>}
                 {componentTabela && experiencias &&
                     <Tabela>
                         {experiencias.map((experiencia, index) => {
                             return (
                                 <ItensTabelaExperiencia exps={experiencia}>
-                                    <td>
+                                    <td className="align-middle text-center">
                                         <Button onClick={async () => {
-                                            await http.delete(`experiencias/${props.userId}/u_e/${experiencia.id}`);
+                                            const { data } = await http.delete(`experiencias/${props.userId}/u_e/${experiencia.id}`);
+                                            
+                                            mostraAlerta('A experiencia foi deletada');
+                                            
                                             setTimeout(() => {
+                                                setAlerta('');
                                                 carregaExperiencias();
                                             },2000);
                                         }}><Icones/>

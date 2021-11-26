@@ -11,11 +11,18 @@
 }
 
 .margemTitulo {
-    margin-top: 3em;
+    margin-top: 2.5em;
     margin-bottom: 1em;
+    padding-left: 0;
+    border-bottom: 0.2rem solid #d4c9c9;
 }
 
 .tituloFormulario {
     padding-bottom: 20px;
     text-align: center;
+}
+
+.listaExperiencia {
+    padding-right: 0;
+    margin-bottom: 45px;
 }

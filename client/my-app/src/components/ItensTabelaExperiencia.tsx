@@ -8,9 +8,9 @@ interface ItensTabelaExperiencia {
 export function ItensTabelaExperiencia(props: ItensTabelaExperiencia) {
     return (
         <tr>
-            <td>{props.exps.empresa}</td>
-            <td>{props.exps.area}</td>
-            <td>{props.exps.atividades}</td>
+            <td className="align-middle">{props.exps.empresa}</td>
+            <td className="align-middle">{props.exps.area}</td>
+            <td className="align-middle">{props.exps.atividades}</td>
             {props.children}
         </tr>
     )

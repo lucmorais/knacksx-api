@@ -10,9 +10,9 @@ interface ItensTabelaProps {
 export function ItensTabela(props: ItensTabelaProps) {
     return (
         <tr>
-            <td>{props.habs.titulo}</td>
-            <td>{props.habs.descricao}</td>
-            <td>{props.habs.nivel}</td>
+            <td className="align-middle">{props.habs.titulo}</td>
+            <td className="align-middle">{props.habs.descricao}</td>
+            <td className="align-middle">{props.habs.nivel}</td>
             {props.children}
         </tr>
     )

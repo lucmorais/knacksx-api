@@ -10,6 +10,7 @@ import { FormularioGestor } from '../components/FormularioGestor';
 import { ListaPerfil } from '../components/ListaPerfil';
 import { ListGroup } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import { Alerta } from '../components/Alerta';
 
 interface HomePageProps{
   username: string;
@@ -32,6 +33,7 @@ const Home: NextPage<HomePageProps> = (props) => {
   const [estado, setEstado] = useState(false);
   const [contador, setContador] = useState(0);
   const [dados, setDados] = useState<any>({});
+  const [alerta, setAlerta] = useState('');
   const router = useRouter();
   
   useEffect(() => {
@@ -42,6 +44,13 @@ const Home: NextPage<HomePageProps> = (props) => {
   function logout() {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     router.reload();
+  }
+
+  function mostraAlerta(mensagem: string) {
+    setAlerta(mensagem);
+    setTimeout(() => {
+        setAlerta('');
+    }, 3000);
   }
 
   async function buscarPerfil() {
@@ -76,13 +85,11 @@ const Home: NextPage<HomePageProps> = (props) => {
   async function submitListarTodosHabsExps() {
     const { data } = await http.get('usuarios/habilidades/experiencias');
 
-    console.log(data);
     setContador(data.length);
     setCandidatos(data);
     setTabela(false);
     setEstado(true);
   }
-
 
   //controller usuario - usuarios
   async function submitFiltroHabilidade() {
@@ -102,6 +109,8 @@ const Home: NextPage<HomePageProps> = (props) => {
     const telefone = (document.querySelector('#telefone') as HTMLInputElement).value;
 
     const { data } = await http.put(`usuarios/${props.userId}`, { nome, email, telefone });
+
+    mostraAlerta('Os dados foram atualizados');
   }
 
   if(props.role == 'Candidato') {
@@ -109,6 +118,7 @@ const Home: NextPage<HomePageProps> = (props) => {
       <div className="h-100">
         <Layout func={logout} opcao={opcoesCandidato} path={paths}>
           <h1 className={styles.layoutTitulo}>Bem vindo(a) {props.username}</h1>
+          {alerta && <Alerta cor={'success'} mensagem={alerta} />}
           <div className={styles.bordaPerfil}>
             <h3 className="text-center pb-3">Perfil</h3>
             <ListaPerfil 

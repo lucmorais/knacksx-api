@@ -6,10 +6,10 @@ export function Tabela(props: any) {
         <Table striped bordered hover variant="dark">
             <thead>
                 <tr>
-                    <th>Titulo</th>
-                    <th>Descrição</th>
-                    <th>Nivel</th>
-                    <th>Ação</th>
+                    <th className="w-25">Titulo</th>
+                    <th className="w-25">Descrição</th>
+                    <th className="w-25">Nivel</th>
+                    <th className="w-25">Ação</th>
                 </tr>
             </thead>
             <tbody>

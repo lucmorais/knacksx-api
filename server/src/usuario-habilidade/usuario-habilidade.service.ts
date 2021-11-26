@@ -44,7 +44,12 @@ export class UsuarioHabilidadeService {
     }*/
 
     async deletar(id_usuario: number, id_habilidade?: number) {
-        const usuario_habilidade: Usuario_Habilidade = await this.listar_id(id_usuario, id_habilidade);
-        usuario_habilidade.destroy();
+        try {
+            const usuario_habilidade: Usuario_Habilidade = await this.listar_id(id_usuario, id_habilidade);
+            usuario_habilidade.destroy();
+        } catch (error) {
+            const usuario_habilidade: Usuario_Habilidade = await this.listar_id(id_usuario, id_habilidade);
+            usuario_habilidade.destroy();
+        }
     }
 }

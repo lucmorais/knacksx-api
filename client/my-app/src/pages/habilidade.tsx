@@ -10,6 +10,7 @@ import { ItensTabela } from '../components/ItensTabela';
 import { Icones } from '../components/Icones';
 import styles from '../styles/Habilidade.module.css';
 import { useRouter } from "next/router";
+import { Alerta } from "../components/Alerta";
 
 interface HabilidadePageProps {
     username: string
@@ -37,6 +38,7 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         'habilidade',
         'experiencia'
     ]);
+    const [alerta, setAlerta] = useState('');
     const router = useRouter();
 
     function logout() {
@@ -44,15 +46,25 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         router.reload();
     }
 
+    function mostraAlerta(mensagem: string) {
+        setAlerta(mensagem);
+        setTimeout(() => {
+            setAlerta('');
+        }, 3000);
+    }
+
     async function carregaHabilidades() {
         const {data} = await http.get(`habilidades/all/${props.userId}`);
         
         setHabilidades(data);
 
-        if(!Object.keys(data).length)
+        if(!Object.keys(data).length) {
             setComponentTabela(false);
-        else
+            mostraAlerta('Nenhuma habilidade cadastrada');
+        }
+        else {
             setComponentTabela(true);
+        }
     }
     
     async function submit(event: FormEvent) {
@@ -64,7 +76,11 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
         
         document.forms[0].reset();
 
-        await http.post(`habilidades/${props.userId}`, { titulo, descricao, nivel });
+        const {data} = await http.post(`habilidades/${props.userId}`, { titulo, descricao, nivel });
+
+        if(data) 
+            mostraAlerta('Habilidade adicionada com sucesso');
+
     }
 
     if(props.role == 'Candidato') {
@@ -72,7 +88,7 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
           <div className="h-100">
             <Layout opcao={opcoes} path={paths} func={logout}>
                 <h2 className={styles.margemTitulo}>Habilidade</h2>
-                <ListGroup horizontal className="mb-4">
+                <ListGroup horizontal className={styles.listaHabilidade} >
                     <ListGroup.Item
                         action
                         variant="primary" 
@@ -88,19 +104,23 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
                             setComponentFormulario(false);
                     }}>Visualizar habilidades</ListGroup.Item>
                 </ListGroup>
-            
+                {alerta && <Alerta cor={'success'} mensagem={alerta} />}
                 {componentFormulario && <FormularioHabilidade func={submit}/>}
                 {componentTabela && habilidades &&
                     <Tabela>
                         {habilidades.map((habilidade, index) => {
                             return (
                                 <ItensTabela habs={habilidade}>
-                                    <td>
+                                    <td className="align-middle text-center">
                                         <Button onClick={async () => {
-                                            await http.delete(`habilidades/${props.userId}/u_h/${habilidade.id}`);
+                                            const { data } = await http.delete(`habilidades/${props.userId}/u_h/${habilidade.id}`);
+                                            
+                                            mostraAlerta('A habilidade foi deletada');
+
                                             setTimeout(() => {
+                                                setAlerta('');
                                                 carregaHabilidades();
-                                            }, 1000);
+                                            }, 2000);
                                         }}><Icones/>
                                         </Button>
                                     </td>
@@ -108,7 +128,7 @@ const Habilidade: NextPage<HabilidadePageProps> = (props) => {
                             )
                         })}
                     </Tabela>
-                }
+                }{alerta && !habilidades && <Alerta cor={'warning'} mensagem={alerta}/>}
             </Layout>
           </div>
         )
