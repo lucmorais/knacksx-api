@@ -1,0 +1,3 @@
+[submodule "wise-mobile"]
+	path = wise-mobile
+	url = https://github.com/lucmorais/knacksx-api.git
