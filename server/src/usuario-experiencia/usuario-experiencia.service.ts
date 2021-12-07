@@ -30,18 +30,6 @@ export class UsuarioExperienciaService {
         });
     }
 
-    /*
-    async atualizar(usuario_experiencia: Usuario_Experiencia, id: number): Promise<Usuario_Experiencia> {
-        return this.usuarios_experienciasModel.update(usuario_experiencia, {
-            where: {
-                id: id
-            },
-            returning: true
-        }).then(() => {
-            return this.listar_id(id);
-        });
-    }*/
-
     async deletar(id_usuario: number, id_experiencia?: number) {
         try {
             const usuario_experiencia: Usuario_Experiencia = await this.listar_id(id_usuario, id_experiencia);

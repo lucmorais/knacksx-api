@@ -1,6 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Op } from "sequelize";
-import { Habilidade } from "src/habilidade/habilidade.model";
 import { Usuario_Habilidade } from "src/usuario-habilidade/usuario-habilidade.model";
 import { USUARIO_HABILIDADE_REPOSITORY } from "./constants";
 import { User_Skill } from "./usuario-habilidade";
@@ -30,18 +29,6 @@ export class UsuarioHabilidadeService {
             }
         });
     }
-
-    /*
-    async atualizar(usuario_habilidade: Usuario_Habilidade, id: number): Promise<Usuario_Habilidade> {
-        return this.usuarios_habilidadesModel.update(usuario_habilidade, {
-            where: {
-                id: id
-            },
-            returning: true
-        }).then(() => {
-            return this.listar_id(id);
-        });
-    }*/
 
     async deletar(id_usuario: number, id_habilidade?: number) {
         try {

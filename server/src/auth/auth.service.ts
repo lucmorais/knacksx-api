@@ -1,5 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { MailerService } from "@nestjs-modules/mailer";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { randomBytes } from "crypto";
 import { UsuarioService } from "src/usuario/usuario.service";
 
 @Injectable()
@@ -7,7 +9,8 @@ export class AuthService {
 
     constructor(
         private usuarioService: UsuarioService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private readonly mailerService: MailerService
     ) {}
 
     async validarUsuario(email_usuario: string, senha_usuario: string): Promise<any> {
@@ -38,5 +41,31 @@ export class AuthService {
                 role: payload.role
             }
         };
+    }
+
+    async recuperarSenha(email_usuario: string) {
+        const usuario = await this.usuarioService.listar_email(email_usuario);
+    
+        if (!usuario){
+            
+            return null;
+        }
+    
+        usuario.reset_senha = randomBytes(4).toString('hex');
+        
+        usuario.save();
+
+        await this.mailerService
+            .sendMail({
+                to: `${usuario.email}`,
+                from: 'noreply@wiseapp.com',
+                subject: 'Recuperação de senha',
+                text: 'Código para recuperar a senha',
+                html: `<p>Este é o código para recuperar a senha: <b>${usuario.reset_senha}</b></p>`,
+            })
+            .then(() => {})
+            .catch(() => {});
+        
+        return email_usuario;
     }
 }

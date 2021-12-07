@@ -1,4 +1,4 @@
-import { Controller, Request, Post, UseGuards, Get } from '@nestjs/common';
+import { Controller, Request, Post, UseGuards, Get, Body } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -18,5 +18,10 @@ export class AppController {
   @Get('auth')
   async getProfile(@Request() req) {
     return req.user;
+  }
+
+  @Post('/recuperar-senha')
+  async recuperarSenhaEmail(@Body() user) {
+    return this.authService.recuperarSenha(user.email);
   }
 }

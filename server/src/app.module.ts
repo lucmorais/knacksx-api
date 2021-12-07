@@ -11,6 +11,8 @@ import { HabilidadeModule } from './habilidade/habilidade.module';
 import { ExperienciaModule } from './experiencia/experiencia.module';
 import { UsuarioExperienciaModule } from './usuario-experiencia/usuario-experiencia.module';
 import { UsuarioHabilidadeModule } from './usuario-habilidade/usuario-habilidade.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 
 @Module({
   imports: [
@@ -21,7 +23,27 @@ import { UsuarioHabilidadeModule } from './usuario-habilidade/usuario-habilidade
     HabilidadeModule,
     ExperienciaModule,
     UsuarioExperienciaModule,
-    UsuarioHabilidadeModule
+    UsuarioHabilidadeModule,
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS
+        }
+      },
+      defaults: {
+        from: '"No Reply" <no-reply@appwise>',
+      },
+      template: {
+        dir: __dirname + '/templates',
+        adapter: new PugAdapter(),
+        options: {
+          strict: true,
+        },
+      },
+    }),
   ],
   controllers: [
     AppController, 

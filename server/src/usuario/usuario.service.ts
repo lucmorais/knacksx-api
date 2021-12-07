@@ -111,6 +111,24 @@ export class UsuarioService {
         });
     }
 
+    async atualizar_senha(codigo: string, nova_senha: string): Promise<Usuario | null> {
+        const usuario = await this.usuariosModel.findOne({
+            where: {
+                reset_senha: codigo
+            }
+        });
+
+        if (usuario) {
+            usuario.senha = nova_senha;
+            usuario.reset_senha = "";
+            usuario.save();
+            
+            return usuario;
+        }
+
+        return null;
+    }
+
     async deletar(id: number) {
         try {
             const usuario: Usuario = await this.listar_id(id);
