@@ -47,7 +47,6 @@ export class AuthService {
         const usuario = await this.usuarioService.listar_email(email_usuario);
     
         if (!usuario){
-            
             return null;
         }
     

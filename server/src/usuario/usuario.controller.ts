@@ -69,7 +69,6 @@ export class UsuarioController {
         }
     }
     
-    @UseGuards(JwtAuthGuard)
     @Post()
     async adicionar(@Body() usuario: Usuario): Promise<any | Error> {
         try {
