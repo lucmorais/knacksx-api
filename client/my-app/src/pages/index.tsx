@@ -64,6 +64,7 @@ const Home: NextPage<HomePageProps> = (props) => {
     const habilidade = (document.querySelector('#habilidade') as HTMLInputElement).value;
 
     const {data} = await http.post('usuarios/habilidades/all', { habilidade });
+    console.log(data);
 
     setContador(data.length);
     setConsulta(data);
@@ -84,16 +85,6 @@ const Home: NextPage<HomePageProps> = (props) => {
   //controller usuario - usuarios/habilidades/experiencias
   async function submitListarTodosHabsExps() {
     const { data } = await http.get('usuarios/habilidades/experiencias');
-
-    setContador(data.length);
-    setCandidatos(data);
-    setTabela(false);
-    setEstado(true);
-  }
-
-  //controller usuario - usuarios
-  async function submitFiltroHabilidade() {
-    const { data } = await http.get('usuarios');
 
     setContador(data.length);
     setCandidatos(data);
@@ -140,13 +131,6 @@ const Home: NextPage<HomePageProps> = (props) => {
           <h4 className="mb-5 text-center">Filtro</h4>
           <FormularioGestor func={submitFiltroTodos}/>
           <ListGroup horizontal className="w-100 mt-3">
-            <ListGroup.Item
-              variant="dark"
-              action
-              onClick={submitFiltroHabilidade}  
-            >
-              Listar candidatos com habilidades cadastradas
-            </ListGroup.Item>
             <ListGroup.Item 
               action 
               variant="dark" 

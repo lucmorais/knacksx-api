@@ -78,6 +78,7 @@ export class UsuarioService {
         return this.usuariosModel.findAll({
             include: [{
                 model: Habilidade,
+                required: true,
                 where: {
                     titulo: titulo
                 }},

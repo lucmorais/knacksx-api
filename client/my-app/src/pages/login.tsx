@@ -1,7 +1,7 @@
 import router from "next/router";
 import styles from "../styles/FormLogin.module.css";
 import React, { FormEvent } from "react";
-import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Container, Form, Nav, Row, Stack } from "react-bootstrap";
 import { setCookie } from "../utils/cookies";
 import { http } from "../utils/http";
 
@@ -33,9 +33,21 @@ const PaginaLogin = () => {
                                 <Form.Label>Senha</Form.Label>
                                 <Form.Control type="password" id="senha" placeholder="Digite a senha" />
                             </Form.Group>
-                            <Button className="text-center" variant="primary" type="submit">
-                                Login
-                            </Button>
+                            <Row className="justify-content-between">
+                                <Col>
+                                    <Button className="text-center" variant="primary" type="submit">
+                                        Login
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Nav  activeKey="/recuperar-senha">
+                                        <Nav.Item className={styles.containerLinks}>
+                                            <Nav.Link className={styles.link} href="/recuperar-senha">Esqueci minha senha</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                                
+                            </Row>
                         </Form>
                     </Col>
                     <Col sm={5}>

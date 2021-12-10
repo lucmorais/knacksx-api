@@ -61,7 +61,7 @@ const PaginaCadastro = () => {
 
                         <Form.Group className="mb-3">
                             <Form.Label>Telefone</Form.Label>
-                            <Form.Control id="telefone" placeholder="Digite o telefone" />
+                            <Form.Control id="telefone" placeholder="Digite o telefone" maxLength={11}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3">

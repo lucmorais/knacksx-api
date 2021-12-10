@@ -18,6 +18,7 @@ export function ListaPerfil(props: ListaPerfilProps) {
                             <Form.Control
                                 id={Object.keys(props.infs)[index]}
                                 defaultValue={props.infs[inf]}
+                                maxLength={Object.keys(props.infs)[index] == 'telefone' ? 11 : 30}
                                 type="text"
                                 disabled={editar}/>
                         </Form.Group>
